@@ -39,6 +39,41 @@ daroSamaky.addEventListener("click", function (e) {
     firstBackground.remove();
   }, 2000);
   firstBackground.id = "firstBackground";
+  daroSamaky.style.transition = "opacity 1s";
+  daroSamaky.style.opacity = "0";
+  setTimeout(() => {
+    daroSamaky.remove();
+  }, 1000);
 
   console.log("daroSamaky was clicked!");
+});
+
+addEventListener("click", function (e) {
+  const cursorPosition = { x: 0, y: 0 };
+
+  cursorPosition.x = e.clientX;
+  cursorPosition.y = e.clientY;
+
+  const clickCircle = document.createElement("div");
+  clickCircle.style.position = "absolute";
+  clickCircle.style.left = `${cursorPosition.x}px`;
+  clickCircle.style.top = `${cursorPosition.y}px`;
+  clickCircle.style.borderRadius = "50%";
+  clickCircle.style.zIndex = "-1";
+  clickCircle.style.backgroundColor = "white";
+  clickCircle.style.width = "0px";
+  clickCircle.style.height = "0px";
+  clickCircle.style.opacity = "0.2";
+  document.body.appendChild(clickCircle);
+  clickCircle.style.transition =
+    "width 1s, height 1s, top 1s ease 0s, left 1s ease 0s, opacity 0.5s";
+  setTimeout(() => {
+    clickCircle.style.width = "100px";
+    clickCircle.style.height = "100px";
+    clickCircle.style.top = `${cursorPosition.y - 50}px`;
+    clickCircle.style.left = `${cursorPosition.x - 50}px`;
+  }, 0);
+  setTimeout(() => {
+    clickCircle.style.opacity = "0";
+  }, 500);
 });
