@@ -1,3 +1,25 @@
 body {
-    background-color: aqua;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
 }
+
+#daroSamaky {
+    font-family: Arial, sans-serif;
+    color: white;
+    font-size: 50px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#daroSamaky:hover {
+    color: red;
+    cursor: pointer;
+    user-select: none;
+}
+
