@@ -18,8 +18,14 @@ body {
 }
 
 #daroSamaky:hover {
-    color: red;
     cursor: pointer;
+    transition: font-size 0.3s ease;
+    font-size: 55px;
     user-select: none;
 }
+
+#daroSamaky {
+    transition: font-size 0.3s ease;
+}
+
 
