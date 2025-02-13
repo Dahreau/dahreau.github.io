@@ -1,7 +1,11 @@
 // IMPORTS
 
 import { getCursorPosition } from "./utils.js";
-import { circlesOnClick, generateBackgroundParticules } from "./background.js";
+import {
+  circlesOnClick,
+  generateBackgroundParticules,
+  pushParticules,
+} from "./background.js";
 
 // FUNCTIONS
 
@@ -94,5 +98,6 @@ function loadMainContent() {
     .catch((error) => console.error("Error loading main content:", error));
 }
 
+pushParticules();
 generateBackgroundParticules();
 circlesOnClick();

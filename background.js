@@ -4,8 +4,36 @@ import { getCursorPosition } from "./utils.js";
 
 // FUNCTIONS
 
+export function pushParticules() {
+  addEventListener("click", function (e) {
+    const cursorPosition = { x: e.clientX, y: e.clientY };
+    const particules = document.querySelectorAll(".particule");
+
+    particules.forEach((particule) => {
+      const rect = particule.getBoundingClientRect();
+      const dx = rect.left + rect.width / 2 - cursorPosition.x;
+      const dy = rect.top + rect.height / 2 - cursorPosition.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance < 100) {
+        // Only affect particles within a 200px range
+        const force = (1 - distance / 100) * 50; // Closer = stronger push
+        const forceX = (dx / distance) * force;
+        const forceY = (dy / distance) * force;
+
+        gsap.to(particule, {
+          x: `+=${forceX}`,
+          y: `+=${forceY}`,
+          duration: 2,
+          ease: "power1.out",
+        });
+      }
+    });
+  });
+}
+
 export function generateBackgroundParticules() {
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 200; i++) {
     backgroundParticules();
   }
 }
@@ -25,6 +53,7 @@ function backgroundParticules() {
   particule.style.zIndex = "-1";
   particule.style.borderRadius = "50%";
   particule.style.boxShadow = "0 0 10px 2px white";
+  particule.classList.add("particule");
   document.body.appendChild(particule);
 }
 
