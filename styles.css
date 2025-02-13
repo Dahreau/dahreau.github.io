@@ -1,4 +1,5 @@
 body {
+    color: white;
     background-color: black;
     display: flex;
     flex-direction: column;
@@ -8,24 +9,32 @@ body {
 
 }
 
-#daroSamaky {
-    font-family: Arial, sans-serif;
+/* Temporary elements */
+
+.startTitle {
+    font-family: "Roboto", sans-serif;
     color: white;
     font-size: 50px;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    transition: font-size 0.3s ease;
 }
 
-#daroSamaky:hover {
-    cursor: pointer;
+.startTitle:hover {
     transition: font-size 0.3s ease;
+    cursor: pointer;
     font-size: 55px;
     user-select: none;
 }
 
-#daroSamaky {
-    transition: font-size 0.3s ease;
-}
+/* FONTS */
 
-
+.roboto-unique {
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+  }

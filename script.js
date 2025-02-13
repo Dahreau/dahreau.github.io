@@ -1,79 +1,98 @@
+// IMPORTS
+
+import { getCursorPosition } from "./utils.js";
+import { circlesOnClick, generateBackgroundParticules } from "./background.js";
+
+// FUNCTIONS
+
+console.log(gsap);
+
 const daroSamaky = document.querySelector("#daroSamaky");
 
 daroSamaky.addEventListener("contextmenu", function (e) {
   e.preventDefault();
 });
 
+gsap.from("#daroSamaky", {
+  opacity: 0,
+  duration: 2,
+  delay: 1,
+  ease: "power2.in",
+});
+// Manages the logic behind the background on click
 daroSamaky.addEventListener("click", function (e) {
-  const cursorPosition = { x: 0, y: 0 };
+  // Gets the cursor position
+  const cursorPosition = getCursorPosition(e);
 
-  cursorPosition.x = e.clientX;
-  cursorPosition.y = e.clientY;
-
-  console.log(
-    `Cursor position: X: ${cursorPosition.x}, Y: ${cursorPosition.y}`
-  );
-
+  // Creates the background
   const firstBackground = document.createElement("div");
+
+  // Styles the background
   firstBackground.style.position = "absolute";
   firstBackground.style.left = `${cursorPosition.x}px`;
   firstBackground.style.top = `${cursorPosition.y}px`;
   firstBackground.style.borderRadius = "50%";
-  firstBackground.style.zIndex = "-1";
-  firstBackground.style.backgroundColor = "#292929";
+  firstBackground.style.zIndex = "-2";
+  firstBackground.style.backgroundColor = "#202020";
   firstBackground.style.width = "0px";
   firstBackground.style.height = "0px";
-  firstBackground.style.transition =
-    "width 2s, height 2s, left 2s ease 0s, top 2s ease 0s";
-  setTimeout(() => {
-    firstBackground.style.width = "3000px";
-    firstBackground.style.height = "3000px";
-    firstBackground.style.left = `${cursorPosition.x - 1500}px`;
-    firstBackground.style.top = `${cursorPosition.y - 1500}px`;
-  }, 0);
-  firstBackground.style;
-  document.body.appendChild(firstBackground);
-  document.body.style.transition = "background-color 2s";
-  document.body.style.backgroundColor = "#292929";
-  setTimeout(() => {
-    firstBackground.remove();
-  }, 2000);
-  firstBackground.id = "firstBackground";
-  daroSamaky.style.transition = "opacity 1s";
-  daroSamaky.style.opacity = "0";
-  setTimeout(() => {
-    daroSamaky.remove();
-  }, 1000);
 
-  console.log("daroSamaky was clicked!");
+  document.body.appendChild(firstBackground); // Adds the background to the body
+
+  // Animates the background (gsap)
+  gsap.to(firstBackground, {
+    width: "3000px",
+    height: "3000px",
+    left: `${cursorPosition.x - 1500}px`,
+    top: `${cursorPosition.y - 1500}px`,
+    duration: 2,
+    ease: "power2.inOut",
+    onComplete: () => {
+      firstBackground.remove();
+    },
+  });
+  gsap.to(document.body, { backgroundColor: "#202020", duration: 2 });
+  gsap.to(daroSamaky, {
+    opacity: 0,
+    duration: 1,
+    onComplete: () => {
+      secondTitle();
+      daroSamaky.remove();
+    },
+  });
 });
 
-addEventListener("click", function (e) {
-  const cursorPosition = { x: 0, y: 0 };
+function secondTitle() {
+  const secondTitle = document.createElement("div");
+  secondTitle.classList.add("startTitle");
 
-  cursorPosition.x = e.clientX;
-  cursorPosition.y = e.clientY;
+  secondTitle.innerHTML = "Développeur Full Stack";
+  secondTitle.style.color = "#fff";
+  document.body.appendChild(secondTitle);
+  secondTitle.style.opacity = "0";
+  secondTitle.style.transition = "opacity 1s, font-size 0.3s ease";
+  setTimeout(() => {
+    secondTitle.style.opacity = "1";
+  }, 50);
 
-  const clickCircle = document.createElement("div");
-  clickCircle.style.position = "absolute";
-  clickCircle.style.left = `${cursorPosition.x}px`;
-  clickCircle.style.top = `${cursorPosition.y}px`;
-  clickCircle.style.borderRadius = "50%";
-  clickCircle.style.zIndex = "-1";
-  clickCircle.style.backgroundColor = "white";
-  clickCircle.style.width = "0px";
-  clickCircle.style.height = "0px";
-  clickCircle.style.opacity = "0.2";
-  document.body.appendChild(clickCircle);
-  clickCircle.style.transition =
-    "width 1s, height 1s, top 1s ease 0s, left 1s ease 0s, opacity 0.5s";
-  setTimeout(() => {
-    clickCircle.style.width = "100px";
-    clickCircle.style.height = "100px";
-    clickCircle.style.top = `${cursorPosition.y - 50}px`;
-    clickCircle.style.left = `${cursorPosition.x - 50}px`;
-  }, 0);
-  setTimeout(() => {
-    clickCircle.style.opacity = "0";
-  }, 500);
-});
+  secondTitle.addEventListener("click", function () {
+    secondTitle.style.opacity = "0";
+    setTimeout(() => {
+      secondTitle.remove();
+      loadMainContent();
+    }, 1000);
+  });
+}
+
+function loadMainContent() {
+  fetch("main-content.html")
+    .then((response) => response.text())
+    .then((data) => {
+      document.getElementById("contentContainer").innerHTML = data;
+      document.getElementById("contentContainer").classList.remove("hidden");
+    })
+    .catch((error) => console.error("Error loading main content:", error));
+}
+
+generateBackgroundParticules();
+circlesOnClick();
