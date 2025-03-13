@@ -1,6 +1,10 @@
 body {
     color: white;
-    background-color: black;
+    /* background-color: black; */
+    /* background-image:  black ; */
+    background-image:
+    radial-gradient(ellipse farthest-side at 10% bottom, hsl(280, 50%, 30%) 0%, hsl(240, 50%, 10%) 75%);
+    background-attachment: fixed;
     display: flex;
     flex-direction: column;
     justify-content: center;

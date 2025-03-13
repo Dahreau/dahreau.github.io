@@ -9,7 +9,7 @@ import {
 
 // FUNCTIONS
 
-console.log(gsap);
+// console.log(gsap);
 
 const daroSamaky = document.querySelector("#daroSamaky");
 
@@ -37,7 +37,10 @@ daroSamaky.addEventListener("click", function (e) {
   firstBackground.style.top = `${cursorPosition.y}px`;
   firstBackground.style.borderRadius = "50%";
   firstBackground.style.zIndex = "-2";
-  firstBackground.style.backgroundColor = "#202020";
+  (firstBackground.style.backgroundColor = "hsl(240, 50%, 10%)"),
+    (firstBackground.style.backgroundImage =
+      "radial-gradient(ellipse farthest-side at 10% bottom, hsl(280, 50%, 30%) 0%, hsl(240, 50%, 10%) 75%)");
+
   firstBackground.style.width = "0px";
   firstBackground.style.height = "0px";
 
@@ -55,7 +58,12 @@ daroSamaky.addEventListener("click", function (e) {
       firstBackground.remove();
     },
   });
-  gsap.to(document.body, { backgroundColor: "#202020", duration: 2 });
+  gsap.to(document.body, {
+    backgroundColor: "hsl(240, 50%, 10%)",
+    backgroundImage:
+      "radial-gradient(ellipse farthest-side at 10% bottom, hsl(280, 50%, 30%) 0%, hsl(240, 50%, 10%) 75%)",
+    duration: 2,
+  });
   gsap.to(daroSamaky, {
     opacity: 0,
     duration: 1,
