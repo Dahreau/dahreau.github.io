@@ -42,7 +42,7 @@ export function generateBackgroundParticules() {
   clearParticules();
 
   // Generate exactly 20 particles
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 50; i++) {
     backgroundParticules();
   }
 }
