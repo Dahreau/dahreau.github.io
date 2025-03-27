@@ -1,209 +1,270 @@
 // IMPORTS
 import { getCursorPosition } from "./utils.js";
 
-// Variables for debounce and managing ongoing animations
+// Variables
+let canvas, ctx;
+let particles = [];
 let resizeTimeout;
-let finalResizeTimeout;
-let scrollTimeout;
 let isAnimating = false;
 
-// FUNCTIONS
+// Particle class
+class Particle {
+  constructor() {
+    this.reset();
+    this.size = 2;
+    this.vx = 0;
+    this.vy = 0;
+    this.moveToNewTarget = false;
+    this.animationProgress = 0; // Pour l'ease-out
+    this.animationDuration = 1; // Durée en secondes
+    this.startX = 0;
+    this.startY = 0;
+  }
 
-export function pushParticules() {
-  addEventListener("click", function (e) {
-    const cursorPosition = { x: e.clientX, y: e.clientY };
-    const particules = document.querySelectorAll(".particule");
+  reset() {
+    this.x = Math.random() * window.innerWidth;
+    this.y = Math.random() * window.innerHeight;
+    this.targetX = this.x;
+    this.targetY = this.y;
+  }
 
-    particules.forEach((particule) => {
-      const rect = particule.getBoundingClientRect();
-      const dx = rect.left + rect.width / 2 - cursorPosition.x;
-      const dy = rect.top + rect.height / 2 - cursorPosition.y;
-      const distance = Math.sqrt(dx * dx + dy * dy);
+  update() {
+    if (this.moveToNewTarget) {
+      // Augmenter progressivement la progression de l'animation
+      this.animationProgress += 0.005; // Très lent (0.005 au lieu de 0.01)
 
-      if (distance < 100) {
-        // Push particles close to the click
-        const force = (1 - distance / 100) * 50;
-        const forceX = (dx / distance) * force;
-        const forceY = (dy / distance) * force;
+      if (this.animationProgress >= 1) {
+        this.x = this.targetX;
+        this.y = this.targetY;
+        this.moveToNewTarget = false;
+        this.animationProgress = 0;
+      } else {
+        // Ease-out cubic - ralentit vers la fin
+        const easeOut = 1 - Math.pow(1 - this.animationProgress, 3);
 
-        gsap.to(particule, {
-          x: `+=${forceX}`,
-          y: `+=${forceY}`,
-          duration: 2,
-          ease: "power1.out",
-        });
+        // Interpolation entre position de départ et cible
+        this.x = this.startX + (this.targetX - this.startX) * easeOut;
+        this.y = this.startY + (this.targetY - this.startY) * easeOut;
       }
-    });
-  });
-}
+    } else {
+      // Comportement normal quand on n'est pas en mode animation
+      // Apply velocity (for click force)
+      this.x += this.vx;
+      this.y += this.vy;
 
-export function generateBackgroundParticules() {
-  // Remove all existing particles
-  clearParticules();
+      // Apply friction to velocity
+      this.vx *= 0.95;
+      this.vy *= 0.95;
 
-  // Generate exactly 20 particles
-  for (let i = 0; i < 50; i++) {
-    backgroundParticules();
+      // If velocity is negligible, stop applying it
+      if (Math.abs(this.vx) < 0.01 && Math.abs(this.vy) < 0.01) {
+        this.vx = 0;
+        this.vy = 0;
+      }
+    }
+
+    // Keep within bounds
+    if (this.x < 0) this.x = 0;
+    if (this.x > window.innerWidth) this.x = window.innerWidth;
+    if (this.y < 0) this.y = 0;
+    if (this.y > window.innerHeight) this.y = window.innerHeight;
+  }
+
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = "white";
+    ctx.fill();
+
+    // Effet de lueur
+    ctx.shadowColor = "white";
+    ctx.shadowBlur = 10;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+  }
+
+  applyForce(forceX, forceY) {
+    // Configurer pour une animation avec ease-out plutôt qu'un mouvement direct
+    this.startX = this.x;
+    this.startY = this.y;
+
+    // Le point cible est calculé en fonction de la force
+    // Force x12 pour un effet visuel plus important
+    this.targetX = this.x + forceX * 12;
+    this.targetY = this.y + forceY * 12;
+
+    // Activer le mode animation
+    this.moveToNewTarget = true;
+    this.animationProgress = 0;
+
+    // Réinitialiser les vélocités
+    this.vx = 0;
+    this.vy = 0;
+  }
+
+  setNewTarget() {
+    this.startX = this.x;
+    this.startY = this.y;
+    this.targetX = Math.random() * window.innerWidth;
+    this.targetY = Math.random() * window.innerHeight;
+    this.moveToNewTarget = true;
+    this.animationProgress = 0; // Réinitialiser la progression
   }
 }
 
-// Function to remove existing particles
-function clearParticules() {
-  const existingParticules = document.querySelectorAll(".particule");
-  existingParticules.forEach((particule) => particule.remove());
+// Setup canvas
+function setupCanvas() {
+  canvas = document.createElement("canvas");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  canvas.style.position = "fixed";
+  canvas.style.top = "0";
+  canvas.style.left = "0";
+  canvas.style.zIndex = "-1";
+  canvas.style.pointerEvents = "none";
+  document.body.appendChild(canvas);
+
+  ctx = canvas.getContext("2d");
 }
 
-// Create a particle at a random position within the window
-function backgroundParticules() {
-  const windowWidth = window.innerWidth;
-  const windowHeight = window.innerHeight;
-
-  const particulePosition = {
-    x: Math.random() * windowWidth,
-    y: Math.random() * windowHeight,
-  };
-
-  const particule = document.createElement("div");
-  particule.style.position = "absolute";
-  particule.style.left = `${particulePosition.x}px`;
-  particule.style.top = `${particulePosition.y}px`;
-  particule.style.width = "2px"; // Particle size
-  particule.style.height = "2px"; // Particle size
-  particule.style.backgroundColor = "white";
-  particule.style.zIndex = "-1";
-  particule.style.borderRadius = "50%";
-  particule.style.boxShadow = "0 0 10px 2px white";
-  particule.classList.add("particule");
-
-  document.body.appendChild(particule);
+// Create particles
+function createParticles(count = 50) {
+  particles = [];
+  for (let i = 0; i < count; i++) {
+    particles.push(new Particle());
+  }
 }
 
-// Particle animation on window resize
-function animateParticlesOnResize() {
-  if (isAnimating) return; // If an animation is already in progress, do nothing.
+// Animation loop
+function animate() {
+  // Clear canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  isAnimating = true; // Mark the animation as in progress
+  // Update and draw particles
+  for (let i = 0; i < particles.length; i++) {
+    particles[i].update();
+    particles[i].draw();
+  }
 
-  const particules = document.querySelectorAll(".particule");
-  const windowWidth = window.innerWidth;
-  const windowHeight = window.innerHeight;
+  // Continue animation
+  requestAnimationFrame(animate);
+}
 
-  // Cancel all ongoing animations with GSAP
-  gsap.killTweensOf(particules); // Cancel all GSAP animations of the particles
+// Handle click event
+function handleClick(e) {
+  const x = e.clientX;
+  const y = e.clientY;
 
-  particules.forEach((particule) => {
-    // Get current position (left/top) of the particle
-    const currentLeft = parseFloat(particule.style.left);
-    const currentTop = parseFloat(particule.style.top);
+  // Create click circle visual effect
+  createClickCircle(x, y);
 
-    // Generate new random positions within the window limits
-    let newLeft = Math.random() * windowWidth;
-    let newTop = Math.random() * windowHeight;
+  // Apply forces to particles
+  particles.forEach((particle) => {
+    const dx = particle.x - x;
+    const dy = particle.y - y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
 
-    // Ensure the particle stays within the screen (size = 2px)
-    newLeft = Math.min(Math.max(newLeft, 0), windowWidth - 2);
-    newTop = Math.min(Math.max(newTop, 0), windowHeight - 2);
+    if (distance < 100) {
+      // Force decreases with distance
+      const force = (1 - distance / 100) * 2.5;
+      // Normalize direction
+      const forceX = (dx / distance) * force;
+      const forceY = (dy / distance) * force;
 
-    // Animate the transition from the current position to the new position
-    gsap.to(particule, {
-      x: newLeft - currentLeft,
-      y: newTop - currentTop,
-      duration: 1,
-      ease: "power2.out",
-      onComplete: () => {
-        // Update the CSS position and reset GSAP transformation
-        particule.style.left = `${newLeft}px`;
-        particule.style.top = `${newTop}px`;
-        gsap.set(particule, { x: 0, y: 0 });
-
-        // Mark the animation as finished when all particles have moved
-        const remainingAnimations = document.querySelectorAll(
-          ".particule:not([style*='transform'])"
-        ).length;
-        if (remainingAnimations === 0) {
-          isAnimating = false;
-        }
-      },
-    });
+      particle.applyForce(forceX, forceY);
+    }
   });
 }
 
-// On window resize, animate particles to new positions with debounce
-window.addEventListener("resize", function () {
-  // Cancel the previous timeout if a resize occurs before the animation finishes
+// Create click circle effect
+function createClickCircle(x, y) {
+  const circleCanvas = document.createElement("canvas");
+  circleCanvas.width = 200;
+  circleCanvas.height = 200;
+  circleCanvas.style.position = "absolute";
+  circleCanvas.style.left = `${x - 100}px`;
+  circleCanvas.style.top = `${y - 100}px`;
+  circleCanvas.style.pointerEvents = "none";
+  circleCanvas.style.zIndex = "-1";
+  document.body.appendChild(circleCanvas);
+
+  const circleCtx = circleCanvas.getContext("2d");
+
+  // Animation timing - plus lent pour correspondre à l'original
+  let startTime = null;
+  const duration = 2000; // 2 secondes
+
+  function animateCircle(timestamp) {
+    if (!startTime) startTime = timestamp;
+    const elapsed = timestamp - startTime;
+    const linearProgress = Math.min(elapsed / duration, 1);
+
+    // Appliquer une fonction d'ease-out pour accélération au début et ralentissement à la fin
+    const easeOutProgress = 1 - Math.pow(1 - linearProgress, 3);
+
+    // Clear canvas
+    circleCtx.clearRect(0, 0, circleCanvas.width, circleCanvas.height);
+
+    // Draw expanding circle - using easeOutProgress instead of linear progress
+    const radius = easeOutProgress * 100;
+    const alpha = 0.2 * (1 - linearProgress);
+
+    circleCtx.beginPath();
+    const gradient = circleCtx.createRadialGradient(
+      100,
+      100,
+      0,
+      100,
+      100,
+      radius
+    );
+    gradient.addColorStop(0, "rgba(255, 255, 255, 0)");
+    gradient.addColorStop(1, `rgba(255, 255, 255, ${alpha})`);
+    circleCtx.fillStyle = gradient;
+    circleCtx.arc(100, 100, radius, 0, Math.PI * 2);
+    circleCtx.fill();
+
+    if (linearProgress < 1) {
+      requestAnimationFrame(animateCircle);
+    } else {
+      document.body.removeChild(circleCanvas);
+    }
+  }
+
+  requestAnimationFrame(animateCircle);
+}
+
+// Handle window resize
+function handleResize() {
+  // Prevent multiple resize handling
   clearTimeout(resizeTimeout);
 
-  // If an animation is in progress, don't start a new one
-  if (isAnimating) return;
-
-  // Trigger the animation after a 200ms delay without resizing
   resizeTimeout = setTimeout(() => {
-    animateParticlesOnResize();
+    // Update canvas dimensions
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-    // Execute the last animation after an additional delay if the user keeps resizing
-    clearTimeout(finalResizeTimeout);
-    finalResizeTimeout = setTimeout(() => {
-      // Execute the last animation to account for the final size
-      animateParticlesOnResize();
-      // Reset animation for the next time
-      isAnimating = false;
-    }, 500); // 500ms delay after the last resize to ensure it's the end
+    // Set new targets for particles
+    particles.forEach((particle) => {
+      particle.setNewTarget();
+    });
   }, 200);
-});
-
-// Handle scroll to animate particles
-window.addEventListener("scroll", function () {
-  clearTimeout(scrollTimeout);
-  scrollTimeout = setTimeout(() => {
-    // Add code here to handle background animation or particles
-    if (!isAnimating) animateParticlesOnResize();
-  }, 100); // Delay to avoid repeated animations during scrolling
-});
-
-export function circlesOnClick() {
-  // Handle the circle display logic on click
-  addEventListener("click", function (e) {
-    const cursorPosition = getCursorPosition(e);
-
-    const clickCircle = document.createElement("div");
-    clickCircle.style.position = "absolute";
-    clickCircle.style.left = `${cursorPosition.x}px`;
-    clickCircle.style.top = `${cursorPosition.y}px`;
-    clickCircle.style.borderRadius = "50%";
-    clickCircle.style.zIndex = "-1";
-    clickCircle.style.background =
-      "radial-gradient(circle, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)";
-    clickCircle.style.width = "0px";
-    clickCircle.style.height = "0px";
-    clickCircle.style.opacity = "0.2";
-
-    document.body.appendChild(clickCircle);
-
-    const tl = gsap.timeline({
-      onComplete: () => {
-        clickCircle.remove();
-      },
-    });
-
-    tl.to(clickCircle, {
-      width: "100px",
-      height: "100px",
-      left: `${cursorPosition.x - 50}px`,
-      top: `${cursorPosition.y - 50}px`,
-      duration: 1,
-      ease: "power2.out",
-    });
-    tl.to(
-      clickCircle,
-      {
-        opacity: 0,
-        duration: 0.5,
-        delay: 0.5,
-      },
-      "-=0.5"
-    );
-  });
 }
 
-// Initialization: generate particles on load
-generateBackgroundParticules();
+// EXPORTS
+export function generateBackgroundParticules() {
+  setupCanvas();
+  createParticles();
+  animate();
+}
+
+export function pushParticules() {
+  window.addEventListener("click", handleClick);
+}
+
+export function circlesOnClick() {
+  // Click circles are handled in handleClick
+}
+
+// Window event listeners
+window.addEventListener("resize", handleResize);

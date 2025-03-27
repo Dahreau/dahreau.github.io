@@ -1,36 +1,73 @@
 body {
     color: white;
-    /* background-color: black; */
-    /* background-image:  black ; */
-    background-image:
-    radial-gradient(ellipse farthest-side at 10% bottom, hsl(280, 50%, 30%) 0%, hsl(240, 50%, 10%) 75%);
+    background-image: radial-gradient(ellipse farthest-side at 10% bottom, hsl(280, 50%, 30%) 0%, hsl(240, 50%, 10%) 75%);
     background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Garde le contenu en haut pour ne pas centrer verticalement */
+    align-items: center;        /* Centre horizontalement */
+    overflow: hidden;
+    font-family: "Roboto";
+    padding: 20px;
+    gap: 20px;
+}
+
+
+#SectionSelector {
+    font-family: roboto;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    gap: 20px;
+    user-select: none;
+    border-top: 1px solid #ffffff;
+    border-bottom: 1px solid #ffffff;
+    font-size: large;
+    align-items: center;
+}
+
+#SectionSelector > div {
+    cursor: pointer;
+}
+
+#SectionSelector > div.active {
+    padding: 5px;
+    border: 1px solid #ffffff;
+}
+
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-
+    width: 80%;
+    max-width: 1200px;
+    margin: auto;
+    border: 1px solid white;
+    padding: 20px;
 }
 
-/* Temporary elements */
+li {
+    white-space: nowrap; /* Empêche le retour à la ligne automatique */
+  }
 
-.startTitle {
-    font-family: "Roboto", sans-serif;
-    color: white;
-    font-size: 50px;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: font-size 0.3s ease;
-}
+ul {
+    width: auto; /* ou une valeur plus grande */
+    min-width: 300px; /* valeur suffisante pour contenir l'email */
+  }
 
-.startTitle:hover {
-    transition: font-size 0.3s ease;
-    cursor: pointer;
-    font-size: 55px;
-    user-select: none;
-}
+
+
+
+
+
+
 
 /* FONTS */
 
