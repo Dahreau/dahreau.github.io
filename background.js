@@ -1,270 +1,297 @@
-// IMPORTS
-import { getCursorPosition } from "./utils.js";
+// // IMPORTS
+// import { getCursorPosition } from "./utils.js";
 
-// Variables
-let canvas, ctx;
-let particles = [];
-let resizeTimeout;
-let isAnimating = false;
+// // Variables
+// let canvas, ctx;
+// let particles = [];
+// let resizeTimeout;
+// let isAnimating = false;
 
-// Particle class
-class Particle {
-  constructor() {
-    this.reset();
-    this.size = 2;
-    this.vx = 0;
-    this.vy = 0;
-    this.moveToNewTarget = false;
-    this.animationProgress = 0; // Pour l'ease-out
-    this.animationDuration = 1; // Durée en secondes
-    this.startX = 0;
-    this.startY = 0;
-  }
+// // Particle class
+// class Particle {
+//   constructor() {
+//     this.reset();
+//     this.size = 2; // Taille exacte comme dans votre ancien code (2px)
+//     this.vx = 0;
+//     this.vy = 0;
+//     this.moveToNewTarget = false;
+//     this.animationProgress = 0; // Pour l'ease-out
+//     this.animationDuration = 1; // Durée en secondes
+//     this.startX = 0;
+//     this.startY = 0;
+//   }
 
-  reset() {
-    this.x = Math.random() * window.innerWidth;
-    this.y = Math.random() * window.innerHeight;
-    this.targetX = this.x;
-    this.targetY = this.y;
-  }
+//   reset() {
+//     this.x = Math.random() * window.innerWidth;
+//     this.y = Math.random() * window.innerHeight;
+//     this.targetX = this.x;
+//     this.targetY = this.y;
+//   }
 
-  update() {
-    if (this.moveToNewTarget) {
-      // Augmenter progressivement la progression de l'animation
-      this.animationProgress += 0.005; // Très lent (0.005 au lieu de 0.01)
+//   update() {
+//     if (this.moveToNewTarget) {
+//       // Augmenter progressivement la progression de l'animation
+//       this.animationProgress += 0.005; // Très lent (0.005 au lieu de 0.01)
 
-      if (this.animationProgress >= 1) {
-        this.x = this.targetX;
-        this.y = this.targetY;
-        this.moveToNewTarget = false;
-        this.animationProgress = 0;
-      } else {
-        // Ease-out cubic - ralentit vers la fin
-        const easeOut = 1 - Math.pow(1 - this.animationProgress, 3);
+//       if (this.animationProgress >= 1) {
+//         this.x = this.targetX;
+//         this.y = this.targetY;
+//         this.moveToNewTarget = false;
+//         this.animationProgress = 0;
+//       } else {
+//         // Ease-out cubic - ralentit vers la fin
+//         const easeOut = 1 - Math.pow(1 - this.animationProgress, 3);
 
-        // Interpolation entre position de départ et cible
-        this.x = this.startX + (this.targetX - this.startX) * easeOut;
-        this.y = this.startY + (this.targetY - this.startY) * easeOut;
-      }
-    } else {
-      // Comportement normal quand on n'est pas en mode animation
-      // Apply velocity (for click force)
-      this.x += this.vx;
-      this.y += this.vy;
+//         // Interpolation entre position de départ et cible
+//         this.x = this.startX + (this.targetX - this.startX) * easeOut;
+//         this.y = this.startY + (this.targetY - this.startY) * easeOut;
+//       }
+//     } else {
+//       // Comportement normal quand on n'est pas en mode animation
+//       // Apply velocity (for click force)
+//       this.x += this.vx;
+//       this.y += this.vy;
 
-      // Apply friction to velocity
-      this.vx *= 0.95;
-      this.vy *= 0.95;
+//       // Apply friction to velocity
+//       this.vx *= 0.95;
+//       this.vy *= 0.95;
 
-      // If velocity is negligible, stop applying it
-      if (Math.abs(this.vx) < 0.01 && Math.abs(this.vy) < 0.01) {
-        this.vx = 0;
-        this.vy = 0;
-      }
-    }
+//       // If velocity is negligible, stop applying it
+//       if (Math.abs(this.vx) < 0.01 && Math.abs(this.vy) < 0.01) {
+//         this.vx = 0;
+//         this.vy = 0;
+//       }
+//     }
 
-    // Keep within bounds
-    if (this.x < 0) this.x = 0;
-    if (this.x > window.innerWidth) this.x = window.innerWidth;
-    if (this.y < 0) this.y = 0;
-    if (this.y > window.innerHeight) this.y = window.innerHeight;
-  }
+//     // Keep within bounds
+//     if (this.x < 0) this.x = 0;
+//     if (this.x > window.innerWidth) this.x = window.innerWidth;
+//     if (this.y < 0) this.y = 0;
+//     if (this.y > window.innerHeight) this.y = window.innerHeight;
+//   }
 
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = "white";
-    ctx.fill();
+//   draw() {
+//     // MÉTHODE AMÉLIORÉE POUR UN EFFET DE LUEUR BEAUCOUP PLUS PRONONCÉ
 
-    // Effet de lueur
-    ctx.shadowColor = "white";
-    ctx.shadowBlur = 10;
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 0;
-  }
+//     // Couche de lueur externe très large
+//     ctx.shadowColor = "rgba(255, 255, 255, 0.3)";
+//     ctx.shadowBlur = 30;
+//     ctx.shadowOffsetX = 0;
+//     ctx.shadowOffsetY = 0;
 
-  applyForce(forceX, forceY) {
-    // Configurer pour une animation avec ease-out plutôt qu'un mouvement direct
-    this.startX = this.x;
-    this.startY = this.y;
+//     // Grande couche diffuse
+//     ctx.beginPath();
+//     ctx.arc(this.x, this.y, this.size + 3, 0, Math.PI * 2);
+//     ctx.fillStyle = "rgba(255, 255, 255, 0.1)";
+//     ctx.fill();
 
-    // Le point cible est calculé en fonction de la force
-    // Force x12 pour un effet visuel plus important
-    this.targetX = this.x + forceX * 12;
-    this.targetY = this.y + forceY * 12;
+//     // Couche de lueur intermédiaire
+//     ctx.shadowColor = "rgba(255, 255, 255, 0.6)";
+//     ctx.shadowBlur = 15;
 
-    // Activer le mode animation
-    this.moveToNewTarget = true;
-    this.animationProgress = 0;
+//     // Couche intermédiaire
+//     ctx.beginPath();
+//     ctx.arc(this.x, this.y, this.size + 1, 0, Math.PI * 2);
+//     ctx.fillStyle = "rgba(255, 255, 255, 0.3)";
+//     ctx.fill();
 
-    // Réinitialiser les vélocités
-    this.vx = 0;
-    this.vy = 0;
-  }
+//     // Point central avec lueur intense
+//     ctx.shadowColor = "white";
+//     ctx.shadowBlur = 8;
 
-  setNewTarget() {
-    this.startX = this.x;
-    this.startY = this.y;
-    this.targetX = Math.random() * window.innerWidth;
-    this.targetY = Math.random() * window.innerHeight;
-    this.moveToNewTarget = true;
-    this.animationProgress = 0; // Réinitialiser la progression
-  }
-}
+//     // Cercle principal - point blanc distinct
+//     ctx.beginPath();
+//     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+//     ctx.fillStyle = "white";
+//     ctx.fill();
 
-// Setup canvas
-function setupCanvas() {
-  canvas = document.createElement("canvas");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  canvas.style.position = "fixed";
-  canvas.style.top = "0";
-  canvas.style.left = "0";
-  canvas.style.zIndex = "-1";
-  canvas.style.pointerEvents = "none";
-  document.body.appendChild(canvas);
+//     // Ne PAS réinitialiser shadowBlur pour maintenir l'effet
+//   }
 
-  ctx = canvas.getContext("2d");
-}
+//   applyForce(forceX, forceY) {
+//     // Configurer pour une animation avec ease-out plutôt qu'un mouvement direct
+//     this.startX = this.x;
+//     this.startY = this.y;
 
-// Create particles
-function createParticles(count = 50) {
-  particles = [];
-  for (let i = 0; i < count; i++) {
-    particles.push(new Particle());
-  }
-}
+//     // Le point cible est calculé en fonction de la force
+//     // Force x12 pour un effet visuel plus important
+//     this.targetX = this.x + forceX * 12;
+//     this.targetY = this.y + forceY * 12;
 
-// Animation loop
-function animate() {
-  // Clear canvas
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+//     // Activer le mode animation
+//     this.moveToNewTarget = true;
+//     this.animationProgress = 0;
 
-  // Update and draw particles
-  for (let i = 0; i < particles.length; i++) {
-    particles[i].update();
-    particles[i].draw();
-  }
+//     // Réinitialiser les vélocités
+//     this.vx = 0;
+//     this.vy = 0;
+//   }
 
-  // Continue animation
-  requestAnimationFrame(animate);
-}
+//   setNewTarget() {
+//     this.startX = this.x;
+//     this.startY = this.y;
+//     this.targetX = Math.random() * window.innerWidth;
+//     this.targetY = Math.random() * window.innerHeight;
+//     this.moveToNewTarget = true;
+//     this.animationProgress = 0; // Réinitialiser la progression
+//   }
+// }
 
-// Handle click event
-function handleClick(e) {
-  const x = e.clientX;
-  const y = e.clientY;
+// // Setup canvas
+// function setupCanvas() {
+//   canvas = document.createElement("canvas");
+//   canvas.width = window.innerWidth;
+//   canvas.height = window.innerHeight;
+//   canvas.style.position = "fixed";
+//   canvas.style.top = "0";
+//   canvas.style.left = "0";
+//   canvas.style.zIndex = "-1";
+//   canvas.style.pointerEvents = "none";
+//   document.body.appendChild(canvas);
 
-  // Create click circle visual effect
-  createClickCircle(x, y);
+//   ctx = canvas.getContext("2d");
+// }
 
-  // Apply forces to particles
-  particles.forEach((particle) => {
-    const dx = particle.x - x;
-    const dy = particle.y - y;
-    const distance = Math.sqrt(dx * dx + dy * dy);
+// // Create particles
+// function createParticles(count = 50) {
+//   particles = [];
+//   for (let i = 0; i < count; i++) {
+//     particles.push(new Particle());
+//   }
+// }
 
-    if (distance < 100) {
-      // Force decreases with distance
-      const force = (1 - distance / 100) * 2.5;
-      // Normalize direction
-      const forceX = (dx / distance) * force;
-      const forceY = (dy / distance) * force;
+// // Animation loop
+// function animate() {
+//   // Clear canvas
+//   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      particle.applyForce(forceX, forceY);
-    }
-  });
-}
+//   // Update and draw particles
+//   for (let i = 0; i < particles.length; i++) {
+//     particles[i].update();
+//     particles[i].draw();
+//     // Réinitialiser les ombres après chaque particule
+//     ctx.shadowBlur = 0;
+//   }
 
-// Create click circle effect
-function createClickCircle(x, y) {
-  const circleCanvas = document.createElement("canvas");
-  circleCanvas.width = 200;
-  circleCanvas.height = 200;
-  circleCanvas.style.position = "absolute";
-  circleCanvas.style.left = `${x - 100}px`;
-  circleCanvas.style.top = `${y - 100}px`;
-  circleCanvas.style.pointerEvents = "none";
-  circleCanvas.style.zIndex = "-1";
-  document.body.appendChild(circleCanvas);
+//   // Continue animation
+//   requestAnimationFrame(animate);
+// }
 
-  const circleCtx = circleCanvas.getContext("2d");
+// // Handle click event
+// function handleClick(e) {
+//   const x = e.clientX;
+//   const y = e.clientY;
 
-  // Animation timing - plus lent pour correspondre à l'original
-  let startTime = null;
-  const duration = 2000; // 2 secondes
+//   // Create click circle visual effect
+//   createClickCircle(x, y);
 
-  function animateCircle(timestamp) {
-    if (!startTime) startTime = timestamp;
-    const elapsed = timestamp - startTime;
-    const linearProgress = Math.min(elapsed / duration, 1);
+//   // Apply forces to particles
+//   particles.forEach((particle) => {
+//     const dx = particle.x - x;
+//     const dy = particle.y - y;
+//     const distance = Math.sqrt(dx * dx + dy * dy);
 
-    // Appliquer une fonction d'ease-out pour accélération au début et ralentissement à la fin
-    const easeOutProgress = 1 - Math.pow(1 - linearProgress, 3);
+//     if (distance < 100) {
+//       // Force decreases with distance
+//       const force = (1 - distance / 100) * 2.5;
+//       // Normalize direction
+//       const forceX = (dx / distance) * force;
+//       const forceY = (dy / distance) * force;
 
-    // Clear canvas
-    circleCtx.clearRect(0, 0, circleCanvas.width, circleCanvas.height);
+//       particle.applyForce(forceX, forceY);
+//     }
+//   });
+// }
 
-    // Draw expanding circle - using easeOutProgress instead of linear progress
-    const radius = easeOutProgress * 100;
-    const alpha = 0.2 * (1 - linearProgress);
+// // Create click circle effect
+// function createClickCircle(x, y) {
+//   const circleCanvas = document.createElement("canvas");
+//   circleCanvas.width = 200;
+//   circleCanvas.height = 200;
+//   circleCanvas.style.position = "absolute";
+//   circleCanvas.style.left = `${x - 100}px`;
+//   circleCanvas.style.top = `${y - 100}px`;
+//   circleCanvas.style.pointerEvents = "none";
+//   circleCanvas.style.zIndex = "-1";
+//   document.body.appendChild(circleCanvas);
 
-    circleCtx.beginPath();
-    const gradient = circleCtx.createRadialGradient(
-      100,
-      100,
-      0,
-      100,
-      100,
-      radius
-    );
-    gradient.addColorStop(0, "rgba(255, 255, 255, 0)");
-    gradient.addColorStop(1, `rgba(255, 255, 255, ${alpha})`);
-    circleCtx.fillStyle = gradient;
-    circleCtx.arc(100, 100, radius, 0, Math.PI * 2);
-    circleCtx.fill();
+//   const circleCtx = circleCanvas.getContext("2d");
 
-    if (linearProgress < 1) {
-      requestAnimationFrame(animateCircle);
-    } else {
-      document.body.removeChild(circleCanvas);
-    }
-  }
+//   // Animation timing - plus lent pour correspondre à l'original
+//   let startTime = null;
+//   const duration = 2000; // 2 secondes
 
-  requestAnimationFrame(animateCircle);
-}
+//   function animateCircle(timestamp) {
+//     if (!startTime) startTime = timestamp;
+//     const elapsed = timestamp - startTime;
+//     const linearProgress = Math.min(elapsed / duration, 1);
 
-// Handle window resize
-function handleResize() {
-  // Prevent multiple resize handling
-  clearTimeout(resizeTimeout);
+//     // Appliquer une fonction d'ease-out pour accélération au début et ralentissement à la fin
+//     const easeOutProgress = 1 - Math.pow(1 - linearProgress, 3);
 
-  resizeTimeout = setTimeout(() => {
-    // Update canvas dimensions
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+//     // Clear canvas
+//     circleCtx.clearRect(0, 0, circleCanvas.width, circleCanvas.height);
 
-    // Set new targets for particles
-    particles.forEach((particle) => {
-      particle.setNewTarget();
-    });
-  }, 200);
-}
+//     // Draw expanding circle - using easeOutProgress instead of linear progress
+//     const radius = easeOutProgress * 100;
+//     const alpha = 0.2 * (1 - linearProgress);
 
-// EXPORTS
-export function generateBackgroundParticules() {
-  setupCanvas();
-  createParticles();
-  animate();
-}
+//     circleCtx.beginPath();
+//     const gradient = circleCtx.createRadialGradient(
+//       100,
+//       100,
+//       0,
+//       100,
+//       100,
+//       radius
+//     );
+//     gradient.addColorStop(0, "rgba(255, 255, 255, 0)");
+//     gradient.addColorStop(1, `rgba(255, 255, 255, ${alpha})`);
+//     circleCtx.fillStyle = gradient;
+//     circleCtx.arc(100, 100, radius, 0, Math.PI * 2);
+//     circleCtx.fill();
 
-export function pushParticules() {
-  window.addEventListener("click", handleClick);
-}
+//     if (linearProgress < 1) {
+//       requestAnimationFrame(animateCircle);
+//     } else {
+//       document.body.removeChild(circleCanvas);
+//     }
+//   }
 
-export function circlesOnClick() {
-  // Click circles are handled in handleClick
-}
+//   requestAnimationFrame(animateCircle);
+// }
 
-// Window event listeners
-window.addEventListener("resize", handleResize);
+// // Handle window resize
+// function handleResize() {
+//   // Prevent multiple resize handling
+//   clearTimeout(resizeTimeout);
+
+//   resizeTimeout = setTimeout(() => {
+//     // Update canvas dimensions
+//     canvas.width = window.innerWidth;
+//     canvas.height = window.innerHeight;
+
+//     // Set new targets for particles
+//     particles.forEach((particle) => {
+//       particle.setNewTarget();
+//     });
+//   }, 200);
+// }
+
+// // EXPORTS
+// export function generateBackgroundParticules() {
+//   setupCanvas();
+//   createParticles();
+//   animate();
+// }
+
+// export function pushParticules() {
+//   window.addEventListener("click", handleClick);
+// }
+
+// export function circlesOnClick() {
+//   // Click circles are handled in handleClick
+// }
+
+// // Window event listeners
+// window.addEventListener("resize", handleResize);

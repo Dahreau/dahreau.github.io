@@ -4,79 +4,450 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daro Samaky</title>
+    <title>Daro Samaky | Developer Portfolio</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-    </style>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- GSAP for animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-
 </head>
 
 <body>
-
-    <div class="header">
-        <div id="SectionSelector">
-            <div id="Skills">Skills</div>
-            <div id="Projects">Projects</div>
-            <div id="Home" class="active">Home</div>
-            <div id="Contact">Contact</div>
-            <div id="About">About</div>
+    <header>
+        <div class="header-content">
+            <h1>Daro <span>Samaky</span></h1>
+            <nav>
+                <ul class="nav-menu">
+                    <li data-section="home" class="active">Home</li>
+                    <li data-section="skills">Skills</li>
+                    <li data-section="projects">Projects</li>
+                    <li data-section="contact">Contact</li>
+                    <li data-section="about">About</li>
+                </ul>
+            </nav>
         </div>
-    </div>
+    </header>
 
-    <div id="content">
-        <section id="homeContent" class="page active">
-
-            <h1>Daro Samaky</h1>
-            <h2>Profile</h>
-                <p>Full Stack Web Developer passionate about web application and video game
-                    development. Versatile and adaptable to new technologies, I combine technical expertise and
-                    creativity
-                    to design innovative solutions. Autonomous and meticulous, I am looking for new challenges to apply
-                    my
-                    skills to ambitious projects.</p>
-
+    <main>
+        <section id="home" class="section active">
+            <div class="container">
+                <div class="home-content">
+                    <div class="home-info">
+                        <div class="focus-areas">
+                            <span class="focus-badge"><i class="fas fa-gamepad"></i> Video Games</span>
+                            <span class="focus-badge"><i class="fas fa-code"></i> Full-Stack</span>
+                            <span class="focus-badge"><i class="fas fa-mobile-alt"></i> Mobile Apps</span>
+                        </div>
+                        <h2>Full Stack <span>Developer</span></h2>
+                        <p class="intro-text">
+                            I craft elegant solutions to complex problems across web, mobile, and game development
+                            platforms.
+                        </p>
+                        <p class="description-text">
+                            With a passion for clean code and user-focused design, I build applications that deliver
+                            exceptional experiences.
+                        </p>
+                        <div class="action-buttons">
+                            <button class="primary-btn"
+                                onclick="document.querySelector('[data-section=projects]').click()">View
+                                Projects</button>
+                            <button class="outline-btn"
+                                onclick="document.querySelector('[data-section=contact]').click()">Contact Me</button>
+                        </div>
+                    </div>
+                    <div class="home-visual">
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                                <span class="file-name">developer.js</span>
+                            </div>
+                            <pre><code>const developer = {
+  name: "Daro Samaky",
+  specializes: [
+    "Full-Stack Development",
+    "Game Development",
+    "Mobile Applications"
+  ],
+  languages: ["JavaScript", "Go", "C"],
+  currentlyWorking: "On innovative solutions"
+};</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <section id="skillsContent" class="page">
-            <h2>Skills :</h2>
-            <ul>
-                <li>Skills 1</li>
-                <li>Skills 2</li>
-                <li>Skills 3</li>
-            </ul>
+        <section id="skills" class="section">
+            <div class="container">
+                <h2 class="section-title">My <span>Skills</span></h2>
 
+                <div class="languages-wrapper">
+                    <h3><i class="fas fa-language"></i> Languages</h3>
+                    <div class="language-grid">
+                        <div class="language-card">
+                            <div class="language-name">French</div>
+                            <div class="language-bars">
+                                <div class="bar filled"></div>
+                                <div class="bar filled"></div>
+                                <div class="bar filled"></div>
+                                <div class="bar filled"></div>
+                                <div class="bar filled"></div>
+                                <div class="bar filled"></div>
+                            </div>
+                            <div class="language-level">Native (6/6)</div>
+                        </div>
+                        <div class="language-card">
+                            <div class="language-name">English</div>
+                            <div class="language-bars">
+                                <div class="bar filled"></div>
+                                <div class="bar filled"></div>
+                                <div class="bar filled"></div>
+                                <div class="bar filled"></div>
+                                <div class="bar filled"></div>
+                                <div class="bar"></div>
+                            </div>
+                            <div class="language-level">Advanced (5/6)</div>
+                        </div>
+                        <div class="language-card">
+                            <div class="language-name">German</div>
+                            <div class="language-bars">
+                                <div class="bar filled"></div>
+                                <div class="bar filled"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                            </div>
+                            <div class="language-level">Basic (2/6)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skills-wrapper">
+                    <div class="skills-column">
+                        <div class="skill-group">
+                            <h3><i class="fas fa-brain"></i> Personal Skills</h3>
+                            <div class="skill-list">
+                                <div class="skill-item">
+                                    <i class="fas fa-sync-alt"></i>
+                                    <span>Adaptability</span>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fas fa-lightbulb"></i>
+                                    <span>Creativity</span>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fas fa-user-cog"></i>
+                                    <span>Autonomy</span>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Punctuality</span>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fas fa-glasses"></i>
+                                    <span>Open-mindedness</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="skill-group">
+                            <h3><i class="fas fa-tools"></i> Tools & Technologies</h3>
+                            <div class="skill-list">
+                                <div class="skill-item">
+                                    <i class="fas fa-code-branch"></i>
+                                    <span>Git</span>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fab fa-docker"></i>
+                                    <span>Docker</span>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fas fa-code"></i>
+                                    <span>VS Code</span>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="far fa-sticky-note"></i>
+                                    <span>Notion</span>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fab fa-figma"></i>
+                                    <span>Figma</span>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fas fa-tasks"></i>
+                                    <span>Taiga</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="skill-group">
+                            <h3><i class="fas fa-paint-brush"></i> Creative Software</h3>
+                            <div class="skill-list">
+                                <div class="skill-item">
+                                    <i class="fas fa-image"></i>
+                                    <span>Gimp</span>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fas fa-photo-video"></i>
+                                    <span>Premiere Pro</span>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fas fa-film"></i>
+                                    <span>After Effects</span>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fas fa-images"></i>
+                                    <span>Photoshop</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skills-column">
+                        <div class="skill-group tech-skills">
+                            <h3><i class="fas fa-laptop-code"></i> Technical Skills</h3>
+                            <div class="bar-skill">
+                                <div class="bar-label">
+                                    <span>HTML</span>
+                                    <span>92%</span>
+                                </div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="width: 92%"></div>
+                                </div>
+                            </div>
+                            <div class="bar-skill">
+                                <div class="bar-label">
+                                    <span>CSS</span>
+                                    <span>88%</span>
+                                </div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="width: 88%"></div>
+                                </div>
+                            </div>
+                            <div class="bar-skill">
+                                <div class="bar-label">
+                                    <span>JavaScript</span>
+                                    <span>85%</span>
+                                </div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="bar-skill">
+                                <div class="bar-label">
+                                    <span>Go</span>
+                                    <span>75%</span>
+                                </div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="width: 75%"></div>
+                                </div>
+                            </div>
+                            <div class="bar-skill">
+                                <div class="bar-label">
+                                    <span>C</span>
+                                    <span>70%</span>
+                                </div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="width: 70%"></div>
+                                </div>
+                            </div>
+                            <div class="bar-skill">
+                                <div class="bar-label">
+                                    <span>SQLite</span>
+                                    <span>80%</span>
+                                </div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="width: 80%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
-        <section id="projectsContent" class="page">
-            <h2>Projects :</h2>
-            <ul>
-                <li>Project 1</li>
-                <li>Project 2</li>
-                <li>Project 3</li>
-            </ul>
+
+        <section id="projects" class="section">
+            <div class="container">
+                <h2 class="section-title">My <span>Projects</span></h2>
+
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="https://via.placeholder.com/800x450" alt="Project 1">
+                        </div>
+                        <div class="project-details">
+                            <h3>Project Title One</h3>
+                            <p>A full-stack web application with real-time data processing and an intuitive interface
+                                for data visualization.</p>
+                            <div class="project-tags">
+                                <span>JavaScript</span>
+                                <span>HTML/CSS</span>
+                                <span>Node.js</span>
+                            </div>
+                            <div class="project-actions">
+                                <a href="#" class="github-link"><i class="fab fa-github"></i> Repository</a>
+                                <a href="#" class="demo-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="https://via.placeholder.com/800x450" alt="Project 2">
+                        </div>
+                        <div class="project-details">
+                            <h3>Project Title Two</h3>
+                            <p>A mobile application developed with a focus on performance and user experience, featuring
+                                offline functionality and data sync.</p>
+                            <div class="project-tags">
+                                <span>Go</span>
+                                <span>SQLite</span>
+                                <span>Docker</span>
+                            </div>
+                            <div class="project-actions">
+                                <a href="#" class="github-link"><i class="fab fa-github"></i> Repository</a>
+                                <a href="#" class="demo-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="https://via.placeholder.com/800x450" alt="Project 3">
+                        </div>
+                        <div class="project-details">
+                            <h3>Project Title Three</h3>
+                            <p>A game development project utilizing modern graphics techniques and optimized performance
+                                for multiple platforms.</p>
+                            <div class="project-tags">
+                                <span>C</span>
+                                <span>JavaScript</span>
+                                <span>Game Development</span>
+                            </div>
+                            <div class="project-actions">
+                                <a href="#" class="github-link"><i class="fab fa-github"></i> Repository</a>
+                                <a href="#" class="demo-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
-        <section id="contactContent" class="page">
-            <h2>Contact :</h2>
-            <ul>
-                <li>Email : darosamaky@gmail.com</li>
+
+        <section id="contact" class="section">
+            <div class="container">
+                <h2 class="section-title">Get in <span>Touch</span></h2>
+
+                <div class="contact-grid">
+                    <a href="mailto:darosamaky@gmail.com" class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h3>Email</h3>
+                            <p>darosamaky@gmail.com</p>
+                        </div>
+                    </a>
+
+                    <a href="https://linkedin.com/in/yourprofile" target="_blank" class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-linkedin-in"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h3>LinkedIn</h3>
+                            <p>Connect with me</p>
+                        </div>
+                    </a>
+
+                    <a href="https://github.com/Dahreau" target="_blank" class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h3>GitHub</h3>
+                            <p>See my repositories</p>
+                        </div>
+                    </a>
+
+                    <a href="path/to/your/resume.pdf" download class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h3>Resume</h3>
+                            <p>Download my CV</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </section>
-        <section id="aboutContent" class="page">
-            <h2>About :</h2>
-            <p>Full Stack Web Developer passionate about web application and video game
-                development. Versatile and adaptable to new technologies, I combine technical expertise and
-                creativity
-                to design innovative solutions. Autonomous and meticulous, I am looking for new challenges to apply
-                my
-                skills to ambitious projects.</p>
+
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="section-title">About <span>Me</span></h2>
+
+                <div class="about-content">
+                    <p class="about-intro">
+                        I'm a Full Stack Developer with expertise in web, mobile, and game development,
+                        focused on creating user-friendly and scalable digital experiences.
+                    </p>
+
+                    <div class="about-details">
+                        <div class="about-section">
+                            <h3><i class="fas fa-route"></i> My Journey</h3>
+                            <p>
+                                My development journey began with a curiosity about how technology works.
+                                Over the years, I've honed my skills across multiple platforms and languages,
+                                constantly adapting to new technologies and methodologies.
+                            </p>
+                            <p>
+                                I've worked on various projects, from web applications to mobile apps and games,
+                                each providing unique challenges and opportunities for growth.
+                            </p>
+                        </div>
+
+                        <div class="about-section">
+                            <h3><i class="fas fa-compass"></i> My Approach</h3>
+                            <p>
+                                I believe in writing clean, maintainable code that solves real problems.
+                                My approach combines technical expertise with creative thinking to deliver
+                                solutions that exceed expectations.
+                            </p>
+                            <p>
+                                I prioritize collaboration, clear communication, and continuous learning
+                                in all my projects, ensuring the best possible outcomes.
+                            </p>
+                        </div>
+
+                        <div class="about-section">
+                            <h3><i class="fas fa-heart"></i> Beyond Coding</h3>
+                            <p>
+                                When I'm not coding, I enjoy exploring new technologies, contributing to
+                                open source, and staying current with industry trends. I'm passionate about
+                                creating software that makes a positive impact.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
+    </main>
 
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2023 Daro Samaky. All rights reserved.</p>
+        </div>
+    </footer>
 
-
-
-
-        <script type="module" src="script.js"></script>
-
+    <script type="module" src="script.js"></script>
 </body>
 
 </html>
