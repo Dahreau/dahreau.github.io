@@ -62,7 +62,7 @@ function initBackgroundEffects() {
         targetY: Math.random() * canvas.height,
         isMovingFromPush: false,
         pushTimer: 0,
-        isActive: Math.random() < 0.1, // Seulement ~10% des particules sont actives initialement
+        isActive: Math.random() < 0.5, // Seulement ~10% des particules sont actives initialement
         stateChangeTimer: 0,
         nextStateChange: Math.random() * 1000 + 500, // 500-1500 frames avant de potentiellement changer d'état
         // Ajout des propriétés pour le déplacement style "background.js"
@@ -128,7 +128,7 @@ function initBackgroundEffects() {
         // Très rarement, considérer un changement d'état (actif/inactif)
         if (p.stateChangeTimer > p.nextStateChange) {
           // 2% de chance de changer d'état
-          if (Math.random() < 0.02) {
+          if (Math.random() < 0.25) {
             p.isActive = !p.isActive;
 
             if (p.isActive) {

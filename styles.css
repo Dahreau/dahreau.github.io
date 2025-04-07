@@ -579,21 +579,24 @@ header h1 span {
     transition: var(--transition);
 }
 
-.contact-item:hover {
-    transform: translateY(-5px);
-    background-color: var(--light-bg);
+.contact-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;        /* Assurez-vous que width et height sont égaux */
+    height: 50px;       /* Même valeur que width pour un cercle parfait */
+    min-width: 50px;    /* Empêche le rétrécissement */
+    min-height: 50px;   /* Empêche le rétrécissement */
+    background-color: rgba(94, 157, 217, 0.2);
+    border-radius: 50%;  /* Crée un cercle parfait */
+    color: var(--accent-color, #5e9dd9);
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
 }
 
-.contact-icon {
-    width: 50px;
-    height: 50px;
-    background-color: rgba(94, 157, 217, 0.2);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    color: var(--accent-color);
+.contact-item:hover .contact-icon {
+    background-color: rgba(94, 157, 217, 0.4);
+    transform: translateY(-3px);
 }
 
 .contact-info h3 {
@@ -730,4 +733,103 @@ footer {
 .portfolio-status i {
     color: #5e9dd9;
     font-size: 1.1rem;
+}
+
+/* Styles pour les cartes de projet enrichies */
+.project-card.enhanced {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+.project-card.enhanced:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+/* Gestion des médias (image/vidéo) */
+.project-media {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.project-image,
+.project-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.5s ease;
+}
+
+/* Cache la vidéo par défaut */
+.project-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+/* Affiche la vidéo et masque l'image au survol */
+.project-card.enhanced:hover .project-video {
+    opacity: 1;
+}
+
+.project-card.enhanced:hover .project-image {
+    opacity: 0;
+}
+
+/* Description courte/longue */
+.project-description-short {
+    transition: opacity 0.3s ease;
+}
+
+.project-details-expanded {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.5s ease;
+    margin-top: 0;
+}
+
+.project-card.enhanced:hover .project-description-short {
+    opacity: 0;
+    height: 0;
+    margin: 0;
+}
+
+.project-card.enhanced:hover .project-tags {
+    display: none;
+}
+
+.project-card.enhanced:hover .project-details-expanded {
+    max-height: 300px;
+    opacity: 1;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.highlight-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(255, 255, 255, 0.08);
+    padding: 8px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+.highlight-item i {
+    color: var(--accent-color);
+}
+
+/* Animation pour démarrer la vidéo */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.project-card.enhanced:hover .project-video {
+    animation: fadeIn 0.5s forwards;
 }
