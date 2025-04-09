@@ -1,0 +1,194 @@
+/* Reading Progress Bar */
+.reading-progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    z-index: 9999;
+    background: transparent;
+}
+
+.reading-progress-bar {
+    height: 100%;
+    width: 0;
+    background: var(--accent-color);
+    transition: width 0.1s ease;
+}
+
+/* Project Filters */
+.project-filters {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.5rem 1.2rem;
+    background-color: var(--medium-bg);
+    border: 1px solid var(--light-bg);
+    border-radius: 30px;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.filter-btn:hover {
+    background-color: var(--light-bg);
+    transform: translateY(-2px);
+}
+
+.filter-btn.active {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+/* Project hiding/showing animation */
+.project-card {
+    transition: transform 0.3s ease, opacity 0.3s ease, height 0.3s ease;
+}
+
+.project-card.filtered-out {
+    opacity: 0.2;
+    transform: scale(0.9);
+    pointer-events: none;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Contact Form */
+.contact-form-container {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+}
+
+.contact-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    background-color: var(--medium-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group:nth-child(3),
+.form-group:nth-child(4) {
+    grid-column: 1 / span 2;
+}
+
+.contact-form label {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-light);
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 0.8rem;
+    background-color: var(--dark-bg);
+    border: 1px solid var(--light-bg);
+    border-radius: var(--border-radius);
+    color: var(--text-light);
+    resize: none;
+    font-family: inherit;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.submit-btn {
+    grid-column: 2;
+    justify-self: end;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+}
+
+.submit-btn:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+/* Radar Chart */
+.radar-chart-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    background-color: var(--medium-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Light mode tweaks */
+body.light-mode .filter-btn {
+    background-color: #f5f5f5;
+    border-color: #e0e0e0;
+}
+
+body.light-mode .filter-btn:hover {
+    background-color: #e9e9e9;
+}
+
+body.light-mode .contact-form input,
+body.light-mode .contact-form textarea {
+    background-color: #f5f5f5;
+    border-color: #e0e0e0;
+}
+
+/* Certification badges */
+.certifications-section {
+    margin-top: 3rem;
+}
+
+.certification-badges {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.certification-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 160px;
+}
+
+.certification-badge img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin-bottom: 0.8rem;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+    transition: var(--transition);
+}
+
+.certification-badge:hover img {
+    transform: scale(1.05);
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15));
+}
+
+.certification-badge span {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}

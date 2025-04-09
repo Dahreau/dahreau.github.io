@@ -8,3 +8,8 @@
 @import 'sections.css';   /* Styles des sections */
 @import 'responsive.css'; /* Adaptations responsives */
 @import 'theme.css';      /* Gestion des thèmes clair/sombre */
+@import 'features.css';   /* Nouvelles fonctionnalités */
+@import 'gallery.css';    /* Styles de galerie */
+@import 'timeline.css';   /* Timeline de parcours */
+@import 'stats.css';      /* Statistiques et GitHub */
+@import 'animations.css'; /* Animations au scroll */

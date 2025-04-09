@@ -18,11 +18,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
-    <!-- GSAP for animations -->
+    <!-- Chart.js pour le radar chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- GSAP pour animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Lightbox2 pour galerie d'images -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox-plus-jquery.min.js"></script>
+
+    <!-- Media print pour le mode impression -->
+    <link rel="stylesheet" href="css/print.css" media="print">
 </head>
 
 <body>
+    <!-- Barre de progression de lecture -->
+    <div class="reading-progress-container">
+        <div class="reading-progress-bar" id="readingProgressBar"></div>
+    </div>
+
     <header>
         <div class="header-content">
             <h1>Daro <span>Samaky</span></h1>
@@ -30,8 +46,10 @@
                 <nav>
                     <ul class="nav-menu">
                         <li data-section="home" class="active">Home</li>
+                        <li data-section="statistics">Stats</li>
                         <li data-section="skills">Skills</li>
                         <li data-section="projects">Projects</li>
+                        <li data-section="timeline">Journey</li>
                         <li data-section="contact">Contact</li>
                         <li data-section="about">About</li>
                     </ul>
@@ -101,9 +119,40 @@
             </div>
         </section>
 
+        <!-- Nouvelle section Statistics -->
+        <section id="statistics" class="section">
+            <div class="container">
+                <h2 class="section-title">My <span>Stats</span></h2>
+
+                <div class="stats-container">
+                    <div class="stat-card" data-aos="fade-up">
+                        <div class="stat-number" data-count="10">0</div>
+                        <div class="stat-label">Projects Completed</div>
+                    </div>
+                    <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="stat-number" data-count="7">0</div>
+                        <div class="stat-label">Programming Languages</div>
+                    </div>
+                    <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="stat-number" data-count="3">0</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="stat-number" data-count="99">0</div>
+                        <div class="stat-label">Cups of Coffee</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="skills" class="section">
             <div class="container">
                 <h2 class="section-title">My <span>Skills</span></h2>
+
+                <!-- Radar Chart of Skills -->
+                <div class="radar-chart-container" data-aos="fade-in">
+                    <canvas id="skillsRadarChart"></canvas>
+                </div>
 
                 <div class="languages-wrapper">
                     <h3><i class="fas fa-language"></i> Languages</h3>
@@ -297,19 +346,28 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </section>
 
         <section id="projects" class="section">
             <div class="container">
                 <h2 class="section-title">My <span>Projects</span></h2>
 
+                <!-- Filtres de projets -->
+                <div class="project-filters" data-aos="fade-up">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="web">Web</button>
+                    <button class="filter-btn" data-filter="game">Games</button>
+                    <button class="filter-btn" data-filter="mobile">Mobile</button>
+                </div>
+
                 <div class="projects-grid">
                     <!-- Forum Aniverse Project -->
-                    <div class="project-card enhanced">
+                    <div class="project-card enhanced" data-category="web">
                         <div class="project-media">
-                            <img src="assets/forum-aniverse.png" alt="Forum Aniverse" class="project-image">
+                            <img src="assets/forum-aniverse-frame.png" alt="Forum Aniverse" class="project-image">
                             <video class="project-video" muted loop playsinline>
-                                <source src="assets/forum-aniverse-demo.mp4" type="video/mp4">
+                                <source src="assets/forum-aniverse-video.mp4" type="video/mp4">
                             </video>
                         </div>
                         <div class="project-details">
@@ -332,8 +390,7 @@
 
                             <div class="project-tags">
                                 <span>JavaScript</span>
-                                <span>HTML</span>
-                                <span>CSS</span>
+                                <span>HTML/CSS</span>
                                 <span>Go</span>
                             </div>
 
@@ -346,7 +403,7 @@
                     </div>
 
                     <!-- Rolex Racing Tycoon Project -->
-                    <div class="project-card enhanced">
+                    <div class="project-card enhanced" data-category="game">
                         <div class="project-media">
                             <img src="assets/rolex-racing-tycoon-frame.png" alt="Rolex Racing Tycoon"
                                 class="project-image">
@@ -391,7 +448,7 @@
                     </div>
 
                     <!-- Make Your Game Project -->
-                    <div class="project-card enhanced">
+                    <div class="project-card enhanced" data-category="game">
                         <div class="project-media">
                             <img src="assets/make-your-game-frame.png" alt="Make Your Game" class="project-image">
                             <video class="project-video" muted loop playsinline>
@@ -432,7 +489,7 @@
                     </div>
 
                     <!-- Groupie Tracker Project -->
-                    <div class="project-card enhanced">
+                    <div class="project-card enhanced" data-category="web">
                         <div class="project-media">
                             <img src="assets/groupie-tracker-frame.png" alt="Groupie Tracker" class="project-image">
                             <video class="project-video" muted loop playsinline>
@@ -473,12 +530,133 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Galerie d'images de projets -->
+                <div class="project-gallery">
+                    <h3>Project Gallery</h3>
+                    <div class="gallery-container">
+                        <a href="assets/gallery/project1-large.jpg" data-lightbox="projects"
+                            data-title="Forum Aniverse">
+                            <img src="assets/gallery/project1-thumb.jpg" alt="Forum Aniverse">
+                        </a>
+                        <a href="assets/gallery/project2-large.jpg" data-lightbox="projects"
+                            data-title="Rolex Racing Tycoon">
+                            <img src="assets/gallery/project2-thumb.jpg" alt="Rolex Racing Tycoon">
+                        </a>
+                        <a href="assets/gallery/project3-large.jpg" data-lightbox="projects"
+                            data-title="Make Your Game">
+                            <img src="assets/gallery/project3-thumb.jpg" alt="Make Your Game">
+                        </a>
+                        <a href="assets/gallery/project4-large.jpg" data-lightbox="projects"
+                            data-title="Groupie Tracker">
+                            <img src="assets/gallery/project4-thumb.jpg" alt="Groupie Tracker">
+                        </a>
+                        <a href="assets/gallery/project5-large.jpg" data-lightbox="projects" data-title="UI Design">
+                            <img src="assets/gallery/project5-thumb.jpg" alt="UI Design">
+                        </a>
+                        <a href="assets/gallery/project6-large.jpg" data-lightbox="projects" data-title="Mobile App">
+                            <img src="assets/gallery/project6-thumb.jpg" alt="Mobile App">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Intégration GitHub -->
+                <div class="github-integration">
+                    <h3>My GitHub Contributions</h3>
+                    <div class="github-stats">
+                        <div class="github-stat">
+                            <i class="fas fa-code-branch"></i>
+                            <span class="github-count" id="repoCount">0</span>
+                            <span class="github-label">Repositories</span>
+                        </div>
+                        <div class="github-stat">
+                            <i class="fas fa-star"></i>
+                            <span class="github-count" id="starsCount">0</span>
+                            <span class="github-label">Stars</span>
+                        </div>
+                        <div class="github-stat">
+                            <i class="fas fa-code-commit"></i>
+                            <span class="github-count" id="commitsCount">0</span>
+                            <span class="github-label">Commits</span>
+                        </div>
+                    </div>
+                    <div class="github-calendar">
+                        <h4>Contribution Calendar</h4>
+                        <img src="https://ghchart.rshah.org/5e9dd9/Dahreau" alt="GitHub Contribution Chart"
+                            id="githubChart">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Timeline -->
+        <section id="timeline" class="section">
+            <div class="container">
+                <h2 class="section-title">My <span>Journey</span></h2>
+
+                <div class="timeline">
+                    <div class="timeline-item" data-aos="fade-right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">2023</div>
+                        <div class="timeline-content">
+                            <h3>Advanced Developer Course</h3>
+                            <p>Completed advanced training in software development methodologies.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-aos="fade-left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">2022</div>
+                        <div class="timeline-content">
+                            <h3>First Major Project</h3>
+                            <p>Led the development of a full-stack web application for a client.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-aos="fade-right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">2021</div>
+                        <div class="timeline-content">
+                            <h3>Bachelor's Degree in Computer Science</h3>
+                            <p>Graduated with honors, specializing in software engineering.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-aos="fade-left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">2020</div>
+                        <div class="timeline-content">
+                            <h3>First Internship</h3>
+                            <p>Gained practical experience working with a development team.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section id="contact" class="section">
             <div class="container">
                 <h2 class="section-title">Get in <span>Touch</span></h2>
+
+                <!-- Contact Form -->
+                <div class="contact-form-container">
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
 
                 <div class="contact-grid">
                     <a href="mailto:darosamaky@gmail.com" class="contact-item">
@@ -488,6 +666,16 @@
                         <div class="contact-info">
                             <h3>Email</h3>
                             <p>darosamaky@gmail.com</p>
+                        </div>
+                    </a>
+
+                    <a href="https://cv.emage-me.com/me/daro-samaky" target="_blank" class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h3>Emage-me</h3>
+                            <p>Peer recommendations</p>
                         </div>
                     </a>
 
@@ -581,8 +769,8 @@
         </div>
     </footer>
 
-    <!-- Script JS déplacé dans le dossier js -->
     <script src="js/script.js"></script>
+    <script src="js/features.js"></script>
 </body>
 
 </html>

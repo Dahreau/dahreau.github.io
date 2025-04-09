@@ -1,0 +1,68 @@
+/* Styles spécifiques pour l'impression */
+@media print {
+    /* Masquer les éléments inutiles en impression */
+    header, 
+    .theme-toggle,
+    .reading-progress-container,
+    .project-filters,
+    .project-gallery,
+    .github-integration,
+    .contact-form-container,
+    footer,
+    video {
+        display: none !important;
+    }
+    
+    /* Ajuster le contenu pour impression */
+    body {
+        font-size: 12pt;
+        line-height: 1.5;
+        color: #000 !important;
+        background-color: #fff !important;
+    }
+    
+    .section {
+        padding: 1cm 0;
+        display: block !important;
+        page-break-after: always;
+        min-height: auto;
+    }
+    
+    /* Couleur de texte en noir */
+    h1, h2, h3, h4, p, li, span {
+        color: #000 !important;
+    }
+    
+    .section-title {
+        font-size: 18pt;
+        border-bottom: 1pt solid #333;
+        padding-bottom: 0.5cm;
+    }
+    
+    /* Assurer que les projets s'affichent correctement */
+    .project-card {
+        break-inside: avoid;
+        margin-bottom: 1cm;
+        border: 1pt solid #ddd;
+        background-color: #fff !important;
+    }
+    
+    /* Format CV optimisé */
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .contact-item {
+        border: none !important;
+        background: none !important;
+    }
+    
+    /* Ajouter info de pied de page */
+    @page {
+        margin: 1cm;
+        @bottom-center {
+            content: "Daro Samaky - Portfolio - " counter(page) " of " counter(pages);
+        }
+    }
+}
