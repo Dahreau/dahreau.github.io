@@ -1,0 +1,116 @@
+/* Buttons */
+.primary-btn, .outline-btn {
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: inherit;
+    font-size: 1rem;
+    border: none;
+}
+
+.primary-btn {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+}
+
+.primary-btn:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.outline-btn {
+    background-color: transparent;
+    color: var(--text-light);
+    border: 1px solid var(--primary-color);
+}
+
+.outline-btn:hover {
+    background-color: rgba(94, 157, 217, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Focus badges */
+.focus-badge {
+    background-color: rgba(94, 157, 217, 0.15);
+    border: 1px solid rgba(94, 157, 217, 0.3);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.focus-badge i {
+    color: var(--accent-color);
+}
+
+/* Code blocks */
+.code-block {
+    background-color: var(--medium-bg);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.code-header {
+    background-color: var(--light-bg);
+    padding: 0.7rem;
+    display: flex;
+    align-items: center;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+.red {
+    background-color: #ff5f56;
+}
+
+.yellow {
+    background-color: #ffbd2e;
+}
+
+.green {
+    background-color: #27c93f;
+}
+
+.file-name {
+    margin-left: 8px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.code-block pre {
+    padding: 1.5rem;
+    overflow-x: auto;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #e6e6e6;
+}
+
+/* Portfolio status */
+.portfolio-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 2.5rem;
+    padding: 10px 15px;
+    background: linear-gradient(to right, rgba(94, 157, 217, 0.1), rgba(30, 30, 30, 0.6));
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #d0d0d0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.portfolio-status i {
+    color: #5e9dd9;
+    font-size: 1.1rem;
+}

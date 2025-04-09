@@ -1,0 +1,138 @@
+/* theme.css - Styles pour le mode clair/sombre */
+
+/* Transition de thème */
+body {
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Bouton de basculement de thème */
+.nav-container {
+    display: flex;
+    align-items: center;
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-light);
+    font-size: 1.2rem;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    width: 40px;
+    height: 40px;
+    margin-left: 1.5rem;
+    background-color: var(--light-bg);
+}
+
+.theme-toggle:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+body.light-mode .theme-toggle:hover {
+    background-color: var(--primary-color);
+}
+
+/* Masquer l'icône appropriée selon le thème */
+body:not(.light-mode) .fa-moon {
+    display: none;
+}
+
+body.light-mode .fa-sun {
+    display: none;
+}
+
+/* Ajustements pour les cartes en mode clair */
+body.light-mode {
+    color: var(--text-light);
+}
+
+body.light-mode .project-card,
+body.light-mode .skill-group,
+body.light-mode .language-card,
+body.light-mode .skill-item,
+body.light-mode .contact-item,
+body.light-mode .about-details {
+    border: 1px solid #e0e0e0;
+}
+
+body.light-mode .bar-container {
+    background-color: #e0e0e0;
+}
+
+body.light-mode .bar:not(.filled) {
+    background-color: #e0e0e0;
+}
+
+body.light-mode .project-tags span {
+    background-color: rgba(41, 121, 255, 0.1);
+    color: var(--text-light);
+}
+
+body.light-mode .contact-icon {
+    background-color: rgba(41, 121, 255, 0.1);
+}
+
+/* Mode clair: couleurs de code spécifiques */
+body.light-mode .code-block pre code {
+    color: #333333;
+}
+
+body.light-mode .dot.red {
+    background-color: #ff5252;
+}
+
+body.light-mode .dot.yellow {
+    background-color: #ffca28;
+}
+
+body.light-mode .dot.green {
+    background-color: #66bb6a;
+}
+
+/* Particle background en mode clair */
+body.light-mode canvas {
+    opacity: 0.3; /* Réduire l'opacité des particules en mode clair */
+}
+
+/* Focus badges en mode clair */
+body.light-mode .focus-badge {
+    background-color: rgba(41, 121, 255, 0.1);
+    border-color: rgba(41, 121, 255, 0.2);
+}
+
+/* Portfolio status en mode clair */
+body.light-mode .portfolio-status {
+    background: linear-gradient(to right, rgba(41, 121, 255, 0.1), rgba(200, 200, 200, 0.2));
+    color: var(--text-muted);
+}
+
+/* Améliorations responsives spécifiques au thème */
+@media (max-width: 768px) {
+    .theme-toggle {
+        margin-left: 1rem;
+        width: 36px;
+        height: 36px;
+    }
+}
+
+@media (max-width: 576px) {
+    .nav-container {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .nav-menu {
+        width: auto;
+    }
+    
+    .theme-toggle {
+        margin-left: 0;
+        margin-right: 0.5rem;
+    }
+}

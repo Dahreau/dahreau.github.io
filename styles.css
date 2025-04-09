@@ -1,4 +1,4 @@
-/* Base Styles */
+/* Base styles */
 :root {
     --primary-color: #3d72b4;
     --secondary-color: #2c3e50;
@@ -575,28 +575,38 @@ header h1 span {
     border-radius: var(--border-radius);
     display: flex;
     align-items: center;
-    gap: 1rem;
+    width: 100%;
+    gap: 15px;
     transition: var(--transition);
+}
+
+.contact-item:hover {
+    transform: translateY(-5px);
+    background-color: var(--light-bg);
 }
 
 .contact-icon {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 50px;        /* Assurez-vous que width et height sont égaux */
-    height: 50px;       /* Même valeur que width pour un cercle parfait */
-    min-width: 50px;    /* Empêche le rétrécissement */
-    min-height: 50px;   /* Empêche le rétrécissement */
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    min-height: 50px;
     background-color: rgba(94, 157, 217, 0.2);
-    border-radius: 50%;  /* Crée un cercle parfait */
-    color: var(--accent-color, #5e9dd9);
+    border-radius: 50%;
+    color: var(--accent-color);
     font-size: 1.2rem;
-    transition: all 0.3s ease;
+    transition: var(--transition);
 }
 
 .contact-item:hover .contact-icon {
     background-color: rgba(94, 157, 217, 0.4);
-    transform: translateY(-3px);
+}
+
+.contact-info {
+    flex: 1;
+    min-width: 0; /* Important pour gérer l'overflow */
 }
 
 .contact-info h3 {
@@ -608,6 +618,10 @@ header h1 span {
     color: var(--text-muted);
     font-size: 0.9rem;
     margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Pour ajouter des points de suspension si nécessaire */
+    width: 100%;
 }
 
 /* About Section */
@@ -657,6 +671,155 @@ footer {
     margin: 0;
     font-size: 0.9rem;
     color: var(--text-muted);
+}
+
+/* Portfolio status */
+.portfolio-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 2.5rem;
+    padding: 10px 15px;
+    background: linear-gradient(to right, rgba(94, 157, 217, 0.1), rgba(30, 30, 30, 0.6));
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #d0d0d0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.portfolio-status i {
+    color: #5e9dd9;
+    font-size: 1.1rem;
+}
+
+/* Styles pour les cartes de projet enrichies - AVEC ANTI-FLICKERING */
+.project-card.enhanced {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    /* Réserver un espace fixe pour éviter le flickering */
+    padding-bottom: 1px;
+    margin-bottom: 5px; /* Marge pour donner de l'espace et éviter le flickering */
+    height: auto;
+}
+
+/* Créer une zone tampon invisible autour de la carte */
+.project-card.enhanced::after {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    z-index: -1;
+    pointer-events: none; /* Ne pas interférer avec les clics */
+}
+
+.project-card.enhanced:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    transition-delay: 0s; /* Pas de délai pour entrer en hover */
+}
+
+.project-card.enhanced:not(:hover) {
+    transition-delay: 0.1s; /* Petit délai avant de quitter l'état hover */
+}
+
+/* Gestion des médias (image/vidéo) */
+.project-media {
+    position: relative;
+    height: 220px; /* Légèrement augmenté pour mieux accommoder les vidéos 16:9 */
+    overflow: hidden;
+}
+
+.project-image,
+.project-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%; /* Améliore le cadrage pour les médias 16:9 */
+    transition: all 0.5s ease;
+}
+
+/* Cache la vidéo par défaut */
+.project-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+/* Affiche la vidéo et masque l'image au survol */
+.project-card.enhanced:hover .project-video {
+    opacity: 1;
+}
+
+.project-card.enhanced:hover .project-image {
+    opacity: 0;
+}
+
+/* Description courte/longue - STABILISÉS */
+.project-description-short {
+    transition: opacity 0.3s ease;
+    height: auto;
+}
+
+.project-details-expanded {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.5s ease;
+    margin-top: 0;
+    overflow-y: auto; /* Permet de scroller si nécessaire plutôt que de grossir la carte */
+    position: relative;
+    height: 0;
+}
+
+.project-card.enhanced:hover .project-description-short {
+    opacity: 0;
+    height: 0;
+    margin: 0;
+    pointer-events: none;
+}
+
+/* Masquer les tags au survol */
+.project-card.enhanced:hover .project-tags {
+    display: none;
+}
+
+/* Masquer les highlights des projets */
+.project-highlights {
+    display: none; /* Masquer complètement les badges de highlight */
+}
+
+.project-card.enhanced:hover .project-details-expanded {
+    max-height: 400px; /* Augmenté pour éviter le texte coupé */
+    opacity: 1;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    height: auto;
+}
+
+.project-description-long {
+    margin-bottom: 0; /* Éliminer la marge si les highlights sont masqués */
+}
+
+/* Styles pour les boutons d'action spécifiques */
+.gameplay-link {
+    background-color: #6441a5; /* Couleur style Twitch/gaming */
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+}
+
+.gameplay-link:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
 }
 
 /* Responsive */
@@ -715,121 +878,27 @@ footer {
     .language-grid {
         grid-template-columns: 1fr;
     }
+    
+    /* Adaptation pour les petits écrans */
+    .contact-info {
+        font-size: 0.9rem;
+    }
+    
+    .contact-icon {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
+    }
 }
 
-.portfolio-status {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 2.5rem;
-    padding: 10px 15px;
-    background: linear-gradient(to right, rgba(94, 157, 217, 0.1), rgba(30, 30, 30, 0.6));
-    border-radius: 8px;
-    font-size: 0.9rem;
-    color: #d0d0d0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.portfolio-status i {
-    color: #5e9dd9;
-    font-size: 1.1rem;
-}
-
-/* Styles pour les cartes de projet enrichies */
-.project-card.enhanced {
-    position: relative;
-    overflow: hidden;
-    transition: all 0.4s ease;
-}
-
-.project-card.enhanced:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-    z-index: 10;
-}
-
-/* Gestion des médias (image/vidéo) */
-.project-media {
-    position: relative;
-    height: 200px;
-    overflow: hidden;
-}
-
-.project-image,
-.project-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: all 0.5s ease;
-}
-
-/* Cache la vidéo par défaut */
-.project-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-}
-
-/* Affiche la vidéo et masque l'image au survol */
-.project-card.enhanced:hover .project-video {
-    opacity: 1;
-}
-
-.project-card.enhanced:hover .project-image {
-    opacity: 0;
-}
-
-/* Description courte/longue */
-.project-description-short {
-    transition: opacity 0.3s ease;
-}
-
-.project-details-expanded {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: all 0.5s ease;
-    margin-top: 0;
-}
-
-.project-card.enhanced:hover .project-description-short {
-    opacity: 0;
-    height: 0;
-    margin: 0;
-}
-
-.project-card.enhanced:hover .project-tags {
-    display: none;
-}
-
-.project-card.enhanced:hover .project-details-expanded {
-    max-height: 300px;
-    opacity: 1;
-    margin-top: 15px;
-    margin-bottom: 15px;
-}
-
-.highlight-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background-color: rgba(255, 255, 255, 0.08);
-    padding: 8px;
-    border-radius: 5px;
-    font-size: 0.9rem;
-}
-
-.highlight-item i {
-    color: var(--accent-color);
-}
-
-/* Animation pour démarrer la vidéo */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.project-card.enhanced:hover .project-video {
-    animation: fadeIn 0.5s forwards;
+@media (max-width: 380px) {
+    .contact-info h3 {
+        font-size: 1rem;
+        margin-bottom: 0.2rem;
+    }
+    
+    .contact-info p {
+        font-size: 0.8rem;
+    }
 }

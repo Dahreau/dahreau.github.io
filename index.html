@@ -5,14 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daro Samaky | Developer Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
+
+    <!-- Lien vers le fichier CSS principal (qui importe les autres) -->
+    <link rel="stylesheet" href="css/main.css">
+
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
+
     <!-- GSAP for animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
@@ -21,15 +26,21 @@
     <header>
         <div class="header-content">
             <h1>Daro <span>Samaky</span></h1>
-            <nav>
-                <ul class="nav-menu">
-                    <li data-section="home" class="active">Home</li>
-                    <li data-section="skills">Skills</li>
-                    <li data-section="projects">Projects</li>
-                    <li data-section="contact">Contact</li>
-                    <li data-section="about">About</li>
-                </ul>
-            </nav>
+            <div class="nav-container">
+                <nav>
+                    <ul class="nav-menu">
+                        <li data-section="home" class="active">Home</li>
+                        <li data-section="skills">Skills</li>
+                        <li data-section="projects">Projects</li>
+                        <li data-section="contact">Contact</li>
+                        <li data-section="about">About</li>
+                    </ul>
+                </nav>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -223,61 +234,69 @@
                             <div class="bar-skill">
                                 <div class="bar-label">
                                     <span>HTML</span>
-                                    <span>92%</span>
+                                    <span>90%</span>
                                 </div>
                                 <div class="bar-container">
-                                    <div class="bar-fill" style="width: 92%"></div>
+                                    <div class="bar-fill" style="width: 90%"></div>
                                 </div>
                             </div>
                             <div class="bar-skill">
                                 <div class="bar-label">
                                     <span>CSS</span>
-                                    <span>88%</span>
+                                    <span>90%</span>
                                 </div>
                                 <div class="bar-container">
-                                    <div class="bar-fill" style="width: 88%"></div>
+                                    <div class="bar-fill" style="width: 90%"></div>
                                 </div>
                             </div>
                             <div class="bar-skill">
                                 <div class="bar-label">
                                     <span>JavaScript</span>
-                                    <span>85%</span>
-                                </div>
-                                <div class="bar-container">
-                                    <div class="bar-fill" style="width: 85%"></div>
-                                </div>
-                            </div>
-                            <div class="bar-skill">
-                                <div class="bar-label">
-                                    <span>Go</span>
-                                    <span>75%</span>
-                                </div>
-                                <div class="bar-container">
-                                    <div class="bar-fill" style="width: 75%"></div>
-                                </div>
-                            </div>
-                            <div class="bar-skill">
-                                <div class="bar-label">
-                                    <span>C</span>
-                                    <span>70%</span>
-                                </div>
-                                <div class="bar-container">
-                                    <div class="bar-fill" style="width: 70%"></div>
-                                </div>
-                            </div>
-                            <div class="bar-skill">
-                                <div class="bar-label">
-                                    <span>SQLite</span>
                                     <span>80%</span>
                                 </div>
                                 <div class="bar-container">
                                     <div class="bar-fill" style="width: 80%"></div>
                                 </div>
                             </div>
+                            <div class="bar-skill">
+                                <div class="bar-label">
+                                    <span>Go</span>
+                                    <span>90%</span>
+                                </div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div class="bar-skill">
+                                <div class="bar-label">
+                                    <span>C</span>
+                                    <span>60%</span>
+                                </div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            <div class="bar-skill">
+                                <div class="bar-label">
+                                    <span>SQLite</span>
+                                    <span>60%</span>
+                                </div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            <div class="bar-skill">
+                                <div class="bar-label">
+                                    <span>Lua</span>
+                                    <span>20%</span>
+                                </div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="width: 20%"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
 
         <section id="projects" class="section">
@@ -313,7 +332,8 @@
 
                             <div class="project-tags">
                                 <span>JavaScript</span>
-                                <span>HTML/CSS</span>
+                                <span>HTML</span>
+                                <span>CSS</span>
                                 <span>Go</span>
                             </div>
 
@@ -328,9 +348,10 @@
                     <!-- Rolex Racing Tycoon Project -->
                     <div class="project-card enhanced">
                         <div class="project-media">
-                            <img src="assets/rolex-racing-tycoon.png" alt="Rolex Racing Tycoon" class="project-image">
+                            <img src="assets/rolex-racing-tycoon-frame.png" alt="Rolex Racing Tycoon"
+                                class="project-image">
                             <video class="project-video" muted loop playsinline>
-                                <source src="assets/rolex-racing-tycoon-demo.mp4" type="video/mp4">
+                                <source src="assets/rolex-racing-tycoon-video.mp4" type="video/mp4">
                             </video>
                         </div>
                         <div class="project-details">
@@ -372,9 +393,9 @@
                     <!-- Make Your Game Project -->
                     <div class="project-card enhanced">
                         <div class="project-media">
-                            <img src="assets/Make-Your-Game.png" alt="Make Your Game" class="project-image">
+                            <img src="assets/make-your-game-frame.png" alt="Make Your Game" class="project-image">
                             <video class="project-video" muted loop playsinline>
-                                <source src="assets/make-your-game-demo.mp4" type="video/mp4">
+                                <source src="assets/make-your-game-video.mp4" type="video/mp4">
                             </video>
                         </div>
                         <div class="project-details">
@@ -382,17 +403,15 @@
 
                             <p class="project-description-short">
                                 A game development project utilizing modern graphics techniques and optimized
-                                performance
-                                for multiple platforms.
+                                performance for multiple platforms.
                             </p>
 
                             <div class="project-details-expanded">
                                 <p class="project-description-long">
                                     A browser-based game inspired by classic Space Invaders, built completely from
-                                    scratch using
-                                    pure JavaScript, HTML5 Canvas, and CSS. Features responsive controls, enemy AI
-                                    patterns,
-                                    score tracking, and special effects like particle explosions.
+                                    scratch using pure JavaScript, HTML5 Canvas, and CSS. Features responsive controls,
+                                    enemy AI
+                                    patterns, score tracking, and special effects like particle explosions.
                                 </p>
                             </div>
 
@@ -415,9 +434,9 @@
                     <!-- Groupie Tracker Project -->
                     <div class="project-card enhanced">
                         <div class="project-media">
-                            <img src="assets/groupie-tracker.png" alt="Groupie Tracker" class="project-image">
+                            <img src="assets/groupie-tracker-frame.png" alt="Groupie Tracker" class="project-image">
                             <video class="project-video" muted loop playsinline>
-                                <source src="assets/groupie-tracker-demo.mp4" type="video/mp4">
+                                <source src="assets/groupie-tracker-video.mp4" type="video/mp4">
                             </video>
                         </div>
                         <div class="project-details">
@@ -562,33 +581,8 @@
         </div>
     </footer>
 
-    <script type="module" src="script.js"></script>
-    <script>
-        // Gestion des vidéos pour les cartes de projets
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.project-card.enhanced').forEach(card => {
-                const video = card.querySelector('.project-video');
-
-                card.addEventListener('mouseenter', () => {
-                    if (video) {
-                        // On essaie de démarrer la vidéo quand on survole la carte
-                        video.play().catch(err => {
-                            console.log('Autoplay prevented:', err);
-                        });
-                    }
-                });
-
-                card.addEventListener('mouseleave', () => {
-                    if (video) {
-                        // On met en pause la vidéo quand on quitte la carte
-                        video.pause();
-                        // Optionnel: remettre la vidéo au début
-                        video.currentTime = 0;
-                    }
-                });
-            });
-        });
-    </script>
+    <!-- Script JS déplacé dans le dossier js -->
+    <script src="js/script.js"></script>
 </body>
 
 </html>

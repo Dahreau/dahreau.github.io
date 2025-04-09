@@ -1,0 +1,132 @@
+/* Variables et styles de base */
+:root {
+    /* Mode sombre (par défaut) */
+    --primary-color: #3d72b4;
+    --secondary-color: #2c3e50;
+    --accent-color: #5e9dd9;
+    --dark-bg: #0a1929;
+    --medium-bg: #132f4c;
+    --light-bg: #173a5e;
+    --text-light: #ffffff;
+    --text-muted: #b0b0b0;
+    --success: #4caf50;
+    --border-radius: 8px;
+    --transition: all 0.3s ease;
+    --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    --hover-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    --code-bg: #132f4c;
+    --code-header: #173a5e;
+}
+
+/* Mode clair */
+body.light-mode {
+    --primary-color: #2962ff;
+    --secondary-color: #455a64;
+    --accent-color: #2979ff;
+    --dark-bg: #f5f7fa;
+    --medium-bg: #ffffff;
+    --light-bg: #e9eef5;
+    --text-light: #212121;
+    --text-muted: #757575;
+    --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    --hover-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+    --code-bg: #f5f5f5;
+    --code-header: #e0e0e0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: var(--text-light);
+    background-color: var(--dark-bg);
+    overflow-x: hidden;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 2.8rem;
+}
+
+h2 {
+    font-size: 2.2rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+a {
+    color: var(--text-light);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--accent-color);
+}
+
+.section {
+    padding: 5rem 0;
+    min-height: 100vh;
+    display: none;
+}
+
+.section.active {
+    display: block;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background-color: var(--accent-color);
+}
+
+.section-title span {
+    color: var(--accent-color);
+}

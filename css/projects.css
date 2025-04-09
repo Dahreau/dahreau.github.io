@@ -1,0 +1,207 @@
+/* Projects Grid */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* Standard Project Card */
+.project-card {
+    background-color: var(--medium-bg);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Enhanced Project Card (with hover effects) */
+.project-card.enhanced {
+    position: relative;
+    overflow: visible;
+    height: 450px; /* Hauteur fixe de base */
+    transition: transform 0.4s ease, box-shadow 0.4s ease, height 0.4s ease;
+    margin-bottom: 25px; /* Espace entre les cartes pour permettre l'agrandissement */
+}
+
+/* Media handling */
+.project-media {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+}
+
+.project-image, .project-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    transition: opacity 0.5s ease;
+}
+
+.project-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.project-card.enhanced:hover .project-video {
+    opacity: 1;
+}
+
+.project-card.enhanced:hover .project-image {
+    opacity: 0;
+}
+
+/* Project details */
+.project-details {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex-grow: 1;
+}
+
+.project-details h3 {
+    margin-bottom: 0.8rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Description courte */
+.project-description-short {
+    color: var(--text-muted);
+    margin-bottom: 1.2rem;
+    transition: opacity 0.3s ease, margin 0.3s ease, height 0.3s ease;
+}
+
+/* Description étendue - SANS SCROLLBAR */
+.project-details-expanded {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden; /* Cache tout contenu qui déborde */
+    transition: opacity 0.4s ease 0.1s, max-height 0.4s ease;
+}
+
+.project-description-long {
+    color: var(--text-muted);
+    margin-bottom: 0;
+}
+
+/* Animation des descriptions au hover */
+.project-card.enhanced:hover {
+    height: 530px; /* Hauteur agrandie au hover pour accommoder le texte long */
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+.project-card.enhanced:hover .project-description-short {
+    opacity: 0;
+    height: 0;
+    margin: 0;
+    transition-delay: 0s;
+}
+
+.project-card.enhanced:hover .project-details-expanded {
+    opacity: 1;
+    max-height: 200px; /* Hauteur suffisante pour le texte long */
+    margin-bottom: 1.2rem;
+}
+
+/* Tags */
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+    transition: opacity 0.3s ease, margin 0.3s ease, height 0.3s ease;
+}
+
+.project-tags span {
+    background-color: rgba(94, 157, 217, 0.2);
+    color: var(--text-light);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.project-card.enhanced:hover .project-tags {
+    opacity: 0;
+    height: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* Actions */
+.project-actions {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 5;
+}
+
+.github-link, .demo-link, .gameplay-link {
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+}
+
+.github-link {
+    background-color: #24292e;
+}
+
+.demo-link {
+    background-color: var(--primary-color);
+}
+
+.gameplay-link {
+    background-color: #6441a5;
+}
+
+.github-link:hover, .demo-link:hover, .gameplay-link:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+/* Anti-flickering: Zone tampon invisible */
+.project-card.enhanced::after {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -80px; 
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Transition différée pour sortir du hover */
+.project-card.enhanced:not(:hover) {
+    transition-delay: 0.2s; /* Petit délai avant de quitter l'état hover */
+}
+
+/* Masquer les éléments inutiles */
+.project-highlights {
+    display: none;
+}
+
+/* États spéciaux pour gérer le délai anti-flickering via JavaScript */
+.project-card.enhanced.hover-cooldown {
+    pointer-events: none; /* Désactive temporairement les interactions */
+}
+
+/* Espace additionnel après la grille */
+.projects-grid::after {
+    content: "";
+    display: block;
+    height: 80px;
+    width: 100%;
+}

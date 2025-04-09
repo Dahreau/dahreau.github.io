@@ -1,0 +1,10 @@
+/* Fichier principal qui importe tous les modules CSS */
+
+/* Ordre d'importation important pour la cascade CSS */
+@import 'base.css';       /* Variables et styles de base */
+@import 'layout.css';     /* Structure de page */
+@import 'components.css'; /* Composants réutilisables */
+@import 'projects.css';   /* Styles spécifiques aux projets */
+@import 'sections.css';   /* Styles des sections */
+@import 'responsive.css'; /* Adaptations responsives */
+@import 'theme.css';      /* Gestion des thèmes clair/sombre */
