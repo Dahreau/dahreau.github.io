@@ -1,31 +1,68 @@
-/* Projects Grid */
+/* Projects Grid - Modified to use flexbox for automatic reflow */
 .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 2rem;
+    min-height: 400px;
+    justify-content: flex-start;
+    position: relative;
 }
 
-/* Standard Project Card */
+/* Make cards take up fixed width */
 .project-card {
+    flex: 0 0 calc(33.333% - 2rem);
+    margin-bottom: 2rem;
     background-color: var(--medium-bg);
     border-radius: var(--border-radius);
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    transition: var(--transition);
+    transition: transform 0.4s ease, opacity 0.4s ease;
     display: flex;
     flex-direction: column;
+    will-change: transform, opacity;
+    transform-origin: center;
+    visibility: visible; /* Pour la transition de visibilité */
 }
 
-/* Enhanced Project Card (with hover effects) */
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
 .project-card.enhanced {
-    position: relative;
-    overflow: visible;
-    height: 450px; /* Hauteur fixe de base */
-    transition: transform 0.4s ease, box-shadow 0.4s ease, height 0.4s ease;
-    margin-bottom: 25px; /* Espace entre les cartes pour permettre l'agrandissement */
+    height: 500px;
+    transition: height 0.3s ease, transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-/* Media handling */
+.project-card.enhanced:hover {
+    height: 550px;
+}
+
+.project-card.hover-cooldown {
+    transition: none;
+}
+
+/* Style pour les éléments filtrés - nouvelle approche */
+.project-card.filtered-out {
+    display: none; /* Important: complètement supprimé du layout flow */
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    width: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    flex: 0;
+}
+
+/* Style pour les éléments visibles */
+.project-card.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s;
+}
+
 .project-media {
     position: relative;
     height: 220px;
@@ -36,8 +73,12 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 30%;
-    transition: opacity 0.5s ease;
+    transition: transform 0.5s ease;
+}
+
+.project-card:hover .project-image,
+.project-card:hover .project-video {
+    transform: scale(1.05);
 }
 
 .project-video {
@@ -45,163 +86,219 @@
     top: 0;
     left: 0;
     opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-.project-card.enhanced:hover .project-video {
+.project-card:hover .project-video {
     opacity: 1;
 }
 
-.project-card.enhanced:hover .project-image {
-    opacity: 0;
-}
-
-/* Project details */
 .project-details {
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    position: relative;
     flex-grow: 1;
 }
 
-.project-details h3 {
+.project-card h3 {
+    font-size: 1.4rem;
     margin-bottom: 0.8rem;
-    position: relative;
-    z-index: 2;
+    color: var(--text-light);
 }
 
-/* Description courte */
 .project-description-short {
     color: var(--text-muted);
+    font-size: 0.95rem;
     margin-bottom: 1.2rem;
-    transition: opacity 0.3s ease, margin 0.3s ease, height 0.3s ease;
+    flex-grow: 1;
 }
 
-/* Description étendue - SANS SCROLLBAR */
 .project-details-expanded {
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden; /* Cache tout contenu qui déborde */
-    transition: opacity 0.4s ease 0.1s, max-height 0.4s ease;
-}
-
-.project-description-long {
-    color: var(--text-muted);
-    margin-bottom: 0;
-}
-
-/* Animation des descriptions au hover */
-.project-card.enhanced:hover {
-    height: 530px; /* Hauteur agrandie au hover pour accommoder le texte long */
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-    z-index: 10;
-}
-
-.project-card.enhanced:hover .project-description-short {
-    opacity: 0;
     height: 0;
-    margin: 0;
-    transition-delay: 0s;
+    overflow: hidden;
+    transition: height 0.3s ease;
 }
 
 .project-card.enhanced:hover .project-details-expanded {
-    opacity: 1;
-    max-height: 200px; /* Hauteur suffisante pour le texte long */
+    height: 100px;
+}
+
+.project-description-long {
+    font-size: 0.9rem;
+    color: var(--text-muted);
     margin-bottom: 1.2rem;
 }
 
-/* Tags */
 .project-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-bottom: 1.2rem;
-    transition: opacity 0.3s ease, margin 0.3s ease, height 0.3s ease;
+    margin-bottom: 1.5rem;
 }
 
 .project-tags span {
-    background-color: rgba(94, 157, 217, 0.2);
-    color: var(--text-light);
-    padding: 3px 8px;
-    border-radius: 4px;
     font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 50px;
+    background-color: rgba(94, 157, 217, 0.15);
+    color: var(--accent-color);
 }
 
-.project-card.enhanced:hover .project-tags {
-    opacity: 0;
-    height: 0;
-    margin: 0;
-    overflow: hidden;
-}
-
-/* Actions */
 .project-actions {
-    margin-top: auto;
     display: flex;
     justify-content: space-between;
-    position: relative;
-    z-index: 5;
+    gap: 1rem;
 }
 
 .github-link, .demo-link, .gameplay-link {
-    padding: 0.5rem 1rem;
+    flex: 1;
+    padding: 0.7rem;
+    text-align: center;
     border-radius: var(--border-radius);
+    transition: var(--transition);
+    font-weight: 500;
     font-size: 0.9rem;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
-    transition: var(--transition);
+    text-decoration: none;
 }
 
 .github-link {
     background-color: #24292e;
+    color: white;
 }
 
-.demo-link {
+.demo-link, .gameplay-link {
     background-color: var(--primary-color);
-}
-
-.gameplay-link {
-    background-color: #6441a5;
+    color: white;
 }
 
 .github-link:hover, .demo-link:hover, .gameplay-link:hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    opacity: 0.95;
 }
 
-/* Anti-flickering: Zone tampon invisible */
-.project-card.enhanced::after {
-    content: "";
-    position: absolute;
-    top: -20px;
-    left: -20px;
-    right: -20px;
-    bottom: -80px; 
-    z-index: -1;
-    pointer-events: none;
+/* Project Filters */
+.project-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-bottom: 3rem;
 }
 
-/* Transition différée pour sortir du hover */
-.project-card.enhanced:not(:hover) {
-    transition-delay: 0.2s; /* Petit délai avant de quitter l'état hover */
+.filter-btn {
+    background-color: var(--light-bg);
+    color: var(--text-muted);
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.9rem;
 }
 
-/* Masquer les éléments inutiles */
-.project-highlights {
-    display: none;
+.filter-btn:hover {
+    background-color: var(--medium-bg);
+    color: var(--text-light);
 }
 
-/* États spéciaux pour gérer le délai anti-flickering via JavaScript */
-.project-card.enhanced.hover-cooldown {
-    pointer-events: none; /* Désactive temporairement les interactions */
+.filter-btn.active {
+    background-color: var(--accent-color);
+    color: white;
 }
 
-/* Espace additionnel après la grille */
-.projects-grid::after {
-    content: "";
+/* Project Gallery */
+.project-gallery {
+    margin-top: 4rem;
+}
+
+.project-gallery h3 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+}
+
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.gallery-container a {
+    border-radius: var(--border-radius);
+    overflow: hidden;
     display: block;
-    height: 80px;
+    transition: var(--transition);
+}
+
+.gallery-container a:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-container img {
     width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    transition: transform 0.3s ease;
+}
+
+.gallery-container a:hover img {
+    transform: scale(1.05);
+}
+
+/* Animation pour les projets filtrés qui apparaissent */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animate-in {
+    animation: fadeInScale 0.4s forwards;
+}
+
+/* Responsive styles */
+@media (max-width: 992px) {
+    .project-card {
+        flex: 0 0 calc(50% - 1.5rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .project-filters {
+        gap: 0.5rem;
+    }
+    
+    .filter-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+    
+    .project-actions {
+        flex-direction: column;
+    }
+    
+    .github-link, .demo-link, .gameplay-link {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .project-card {
+        flex: 0 0 100%;
+    }
+    
+    .project-card.enhanced:hover {
+        height: 570px; /* Légèrement plus grand sur mobile */
+    }
 }

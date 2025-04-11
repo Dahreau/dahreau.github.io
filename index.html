@@ -54,7 +54,7 @@
                         <li data-section="about">About</li>
                     </ul>
                 </nav>
-                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
                     <i class="fas fa-sun"></i>
                     <i class="fas fa-moon"></i>
                 </button>
@@ -124,22 +124,156 @@
             <div class="container">
                 <h2 class="section-title">My <span>Stats</span></h2>
 
+                <div class="stats-overview">
+                    <p class="stats-intro">
+                        These numbers represent my journey as a developer and my contribution to the programming
+                        community.
+                    </p>
+                </div>
+
                 <div class="stats-container">
-                    <div class="stat-card" data-aos="fade-up">
-                        <div class="stat-number" data-count="10">0</div>
-                        <div class="stat-label">Projects Completed</div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <span class="stat-number" data-count="15000">0</span>
+                        <span class="stat-label">Lines of Code</span>
                     </div>
-                    <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
-                        <div class="stat-number" data-count="7">0</div>
-                        <div class="stat-label">Programming Languages</div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <span class="stat-number" data-count="25">0</span>
+                        <span class="stat-label">Projects Completed</span>
                     </div>
-                    <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
-                        <div class="stat-number" data-count="3">0</div>
-                        <div class="stat-label">Years Experience</div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-coffee"></i>
+                        </div>
+                        <span class="stat-number" data-count="348">0</span>
+                        <span class="stat-label">Cups of Coffee</span>
                     </div>
-                    <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
-                        <div class="stat-number" data-count="99">0</div>
-                        <div class="stat-label">Cups of Coffee</div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <span class="stat-number" data-count="1200">0</span>
+                        <span class="stat-label">Hours Coded</span>
+                    </div>
+                </div>
+
+                <!-- GitHub Integration avec nouvelle mise en page -->
+                <div class="github-integration">
+                    <div class="github-header">
+                        <i class="fab fa-github"></i>
+                        <h3>GitHub Contributions</h3>
+                    </div>
+
+                    <div class="github-stats-grid">
+                        <div class="github-stats-container">
+                            <div class="github-stat">
+                                <div class="github-icon">
+                                    <i class="fas fa-code-branch"></i>
+                                </div>
+                                <span class="github-count" id="repoCount">0</span>
+                                <span class="github-label">Repositories</span>
+                            </div>
+
+                            <div class="github-stat">
+                                <div class="github-icon">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="github-count" id="starsCount">0</span>
+                                <span class="github-label">Stars</span>
+                            </div>
+
+                            <div class="github-stat">
+                                <div class="github-icon">
+                                    <i class="fas fa-code-commit"></i>
+                                </div>
+                                <span class="github-count" id="commitsCount">0</span>
+                                <span class="github-label">Commits</span>
+                            </div>
+                        </div>
+
+                        <div class="github-chart-container">
+                            <div class="github-activity">
+                                <h4>Contribution Activity</h4>
+                                <div class="contribution-calendar-wrapper">
+                                    <!-- La classe contribution-calendar-wrapper permet de contrôler la taille -->
+                                    <img src="https://ghchart.rshah.org/5e9dd9/Dahreau" alt="GitHub Contribution Chart"
+                                        id="githubChart" class="github-calendar-img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="github-profile-link-container">
+                        <a href="https://github.com/Dahreau" target="_blank" class="github-profile-link">
+                            <i class="fab fa-github"></i> View my complete GitHub profile
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Technologies utilisées -->
+                <div class="tech-usage-section">
+                    <h3 class="tech-usage-title">Technologies I Use</h3>
+
+                    <div class="tech-usage-grid">
+                        <div class="tech-usage-card">
+                            <div class="tech-usage-icon">
+                                <i class="fab fa-js-square"></i>
+                            </div>
+                            <div class="tech-usage-info">
+                                <h4>JavaScript</h4>
+                                <div class="tech-usage-bar">
+                                    <div class="tech-usage-fill" style="width: 92%"></div>
+                                </div>
+                                <span class="tech-usage-percent">92%</span>
+                            </div>
+                        </div>
+
+                        <div class="tech-usage-card">
+                            <div class="tech-usage-icon">
+                                <i class="fab fa-html5"></i>
+                            </div>
+                            <div class="tech-usage-info">
+                                <h4>HTML/CSS</h4>
+                                <div class="tech-usage-bar">
+                                    <div class="tech-usage-fill" style="width: 88%"></div>
+                                </div>
+                                <span class="tech-usage-percent">88%</span>
+                            </div>
+                        </div>
+
+                        <div class="tech-usage-card">
+                            <div class="tech-usage-icon">
+                                <i class="fa fa-database"></i>
+                            </div>
+                            <div class="tech-usage-info">
+                                <h4>SQL</h4>
+                                <div class="tech-usage-bar">
+                                    <div class="tech-usage-fill" style="width: 75%"></div>
+                                </div>
+                                <span class="tech-usage-percent">75%</span>
+                            </div>
+                        </div>
+
+                        <div class="tech-usage-card">
+                            <div class="tech-usage-icon">
+                                <i class="fa fa-cogs"></i>
+                            </div>
+                            <div class="tech-usage-info">
+                                <h4>Go</h4>
+                                <div class="tech-usage-bar">
+                                    <div class="tech-usage-fill" style="width: 70%"></div>
+                                </div>
+                                <span class="tech-usage-percent">70%</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -354,16 +488,19 @@
                 <h2 class="section-title">My <span>Projects</span></h2>
 
                 <!-- Filtres de projets -->
-                <div class="project-filters" data-aos="fade-up">
+                <div class="project-filters">
                     <button class="filter-btn active" data-filter="all">All</button>
                     <button class="filter-btn" data-filter="web">Web</button>
-                    <button class="filter-btn" data-filter="game">Games</button>
-                    <button class="filter-btn" data-filter="mobile">Mobile</button>
+                    <button class="filter-btn" data-filter="game">Game Dev</button>
+                    <button class="filter-btn" data-filter="HTML/CSS">HTML/CSS</button>
+                    <button class="filter-btn" data-filter="JavaScript">JavaScript</button>
+                    <button class="filter-btn" data-filter="Go">Go</button>
+                    <button class="filter-btn" data-filter="Lua">Lua</button>
                 </div>
 
                 <div class="projects-grid">
                     <!-- Forum Aniverse Project -->
-                    <div class="project-card enhanced" data-category="web">
+                    <div class="project-card enhanced" data-tags="web JavaScript HTML/CSS Go">
                         <div class="project-media">
                             <img src="assets/forum-aniverse-frame.png" alt="Forum Aniverse" class="project-image">
                             <video class="project-video" muted loop playsinline>
@@ -403,7 +540,7 @@
                     </div>
 
                     <!-- Rolex Racing Tycoon Project -->
-                    <div class="project-card enhanced" data-category="game">
+                    <div class="project-card enhanced" data-tags="game Lua">
                         <div class="project-media">
                             <img src="assets/rolex-racing-tycoon-frame.png" alt="Rolex Racing Tycoon"
                                 class="project-image">
@@ -429,10 +566,9 @@
                             </div>
 
                             <div class="project-tags">
-                                <span>Roblox Studio</span>
-                                <span>Lua Scripting</span>
-                                <span>GUI Development</span>
-                                <span>Team Collaboration</span>
+                                <span>Lua</span>
+                                <span>Game Dev</span>
+                                <span>UI Development</span>
                             </div>
 
                             <div class="project-actions">
@@ -448,7 +584,7 @@
                     </div>
 
                     <!-- Make Your Game Project -->
-                    <div class="project-card enhanced" data-category="game">
+                    <div class="project-card enhanced" data-tags="game JavaScript HTML/CSS">
                         <div class="project-media">
                             <img src="assets/make-your-game-frame.png" alt="Make Your Game" class="project-image">
                             <video class="project-video" muted loop playsinline>
@@ -474,8 +610,7 @@
 
                             <div class="project-tags">
                                 <span>JavaScript</span>
-                                <span>HTML</span>
-                                <span>CSS</span>
+                                <span>HTML/CSS</span>
                                 <span>Game Development</span>
                             </div>
 
@@ -489,7 +624,7 @@
                     </div>
 
                     <!-- Groupie Tracker Project -->
-                    <div class="project-card enhanced" data-category="web">
+                    <div class="project-card enhanced" data-tags="web Go JavaScript HTML/CSS">
                         <div class="project-media">
                             <img src="assets/groupie-tracker-frame.png" alt="Groupie Tracker" class="project-image">
                             <video class="project-video" muted loop playsinline>
@@ -516,8 +651,7 @@
 
                             <div class="project-tags">
                                 <span>Go</span>
-                                <span>HTML</span>
-                                <span>CSS</span>
+                                <span>HTML/CSS</span>
                                 <span>JavaScript</span>
                             </div>
 
@@ -531,8 +665,9 @@
                     </div>
                 </div>
 
+
                 <!-- Galerie d'images de projets -->
-                <div class="project-gallery">
+                <!-- <div class="project-gallery">
                     <h3>Project Gallery</h3>
                     <div class="gallery-container">
                         <a href="assets/gallery/project1-large.jpg" data-lightbox="projects"
@@ -558,35 +693,7 @@
                             <img src="assets/gallery/project6-thumb.jpg" alt="Mobile App">
                         </a>
                     </div>
-                </div>
-
-                <!-- Intégration GitHub -->
-                <div class="github-integration">
-                    <h3>My GitHub Contributions</h3>
-                    <div class="github-stats">
-                        <div class="github-stat">
-                            <i class="fas fa-code-branch"></i>
-                            <span class="github-count" id="repoCount">0</span>
-                            <span class="github-label">Repositories</span>
-                        </div>
-                        <div class="github-stat">
-                            <i class="fas fa-star"></i>
-                            <span class="github-count" id="starsCount">0</span>
-                            <span class="github-label">Stars</span>
-                        </div>
-                        <div class="github-stat">
-                            <i class="fas fa-code-commit"></i>
-                            <span class="github-count" id="commitsCount">0</span>
-                            <span class="github-label">Commits</span>
-                        </div>
-                    </div>
-                    <div class="github-calendar">
-                        <h4>Contribution Calendar</h4>
-                        <img src="https://ghchart.rshah.org/5e9dd9/Dahreau" alt="GitHub Contribution Chart"
-                            id="githubChart">
-                    </div>
-                </div>
-            </div>
+                </div> -->
         </section>
 
         <!-- Section Timeline -->
@@ -597,164 +704,136 @@
                 <div class="timeline">
                     <div class="timeline-item" data-aos="fade-right">
                         <div class="timeline-dot"></div>
-                        <div class="timeline-date">2023</div>
+                        <div class="timeline-date">2024</div>
                         <div class="timeline-content">
-                            <h3>Advanced Developer Course</h3>
-                            <p>Completed advanced training in software development methodologies.</p>
+                            <h3>Full Stack Developer Zone01</h3>
+                            <p>Intensive training in full stack development with projects using JavaScript, Go and SQL.
+                            </p>
                         </div>
                     </div>
                     <div class="timeline-item" data-aos="fade-left">
                         <div class="timeline-dot"></div>
-                        <div class="timeline-date">2022</div>
+                        <div class="timeline-date">2019</div>
                         <div class="timeline-content">
-                            <h3>First Major Project</h3>
-                            <p>Led the development of a full-stack web application for a client.</p>
+                            <h3>Online Design Course</h3>
+                            <p>Introduction to design basics.</p>
                         </div>
                     </div>
                     <div class="timeline-item" data-aos="fade-right">
                         <div class="timeline-dot"></div>
-                        <div class="timeline-date">2021</div>
+                        <div class="timeline-date">2018</div>
                         <div class="timeline-content">
-                            <h3>Bachelor's Degree in Computer Science</h3>
-                            <p>Graduated with honors, specializing in software engineering.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item" data-aos="fade-left">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-date">2020</div>
-                        <div class="timeline-content">
-                            <h3>First Internship</h3>
-                            <p>Gained practical experience working with a development team.</p>
+                            <h3>Cinema and Audiovisual Studies</h3>
+                            <p>Film analysis, cinema history and audiovisual techniques exploration.</p>
                         </div>
                     </div>
                 </div>
             </div>
+            </div>
         </section>
 
+        <!-- Section Contact -->
+        <!-- Section Contact -->
         <section id="contact" class="section">
             <div class="container">
-                <h2 class="section-title">Get in <span>Touch</span></h2>
+                <h2 class="section-title">Contact <span>Me</span></h2>
 
-                <!-- Contact Form -->
-                <div class="contact-form-container">
-                    <form id="contactForm" class="contact-form">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required>
+                <div class="contact-wrapper">
+                    <div class="contact-intro-block">
+                        <div class="contact-intro-icon">
+                            <i class="fas fa-paper-plane"></i>
                         </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
+                        <h3>Let's Work Together</h3>
+                        <p class="contact-intro">
+                            I'm currently available for freelance work and job opportunities.
+                            If you have a project in mind or just want to chat, feel free to reach out!
+                        </p>
+                        <div class="contact-banner">
+                            <div class="status-indicator available">
+                                <span class="status-dot"></span>
+                                <span class="status-text">Available for new projects</span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="submit-btn">Send Message</button>
-                    </form>
-                </div>
+                    </div>
 
-                <div class="contact-grid">
-                    <a href="mailto:darosamaky@gmail.com" class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
+                    <div class="contact-grid">
+                        <div class="contact-card email-card">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Email</h3>
+                                <p>Response within 24-48h</p>
+                                <a href="mailto:darosamaky@gmail.com" class="contact-action">
+                                    <span>Send Email</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
                         </div>
-                        <div class="contact-info">
-                            <h3>Email</h3>
-                            <p>darosamaky@gmail.com</p>
-                        </div>
-                    </a>
 
-                    <a href="https://cv.emage-me.com/me/daro-samaky" target="_blank" class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-star"></i>
+                        <div class="contact-card linkedin-card">
+                            <div class="contact-icon">
+                                <i class="fab fa-linkedin"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>LinkedIn</h3>
+                                <p>Let's connect professionally</p>
+                                <a href="https://www.linkedin.com/in/daro-samaky-2752b7192/" target="_blank"
+                                    class="contact-action">
+                                    <span>View Profile</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
                         </div>
-                        <div class="contact-info">
-                            <h3>Emage-me</h3>
-                            <p>Peer recommendations</p>
-                        </div>
-                    </a>
 
-                    <a href="https://www.linkedin.com/in/daro-samaky-2752b7192/" target="_blank" class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fab fa-linkedin-in"></i>
+                        <div class="contact-card github-card">
+                            <div class="contact-icon">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>GitHub</h3>
+                                <p>Check out my open source projects</p>
+                                <a href="https://github.com/Dahreau" target="_blank" class="contact-action">
+                                    <span>View Projects</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
                         </div>
-                        <div class="contact-info">
-                            <h3>LinkedIn</h3>
-                            <p>Connect with me</p>
-                        </div>
-                    </a>
 
-                    <a href="https://github.com/Dahreau" target="_blank" class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fab fa-github"></i>
+                        <div class="contact-card emage-card">
+                            <div class="contact-icon">
+                                <i class="fas fa-id-card"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Emage-me</h3>
+                                <p>View my interactive resume</p>
+                                <a href="https://cv.emage-me.com/me/daro-samaky" target="_blank" class="contact-action">
+                                    <span>View Resume</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
                         </div>
-                        <div class="contact-info">
-                            <h3>GitHub</h3>
-                            <p>See my repositories</p>
-                        </div>
-                    </a>
+                    </div>
 
-                    <a href="assets/cv-darosamaky.pdf" download class="contact-item">
+                    <div class="contact-card cv-card">
                         <div class="contact-icon">
                             <i class="fas fa-file-pdf"></i>
                         </div>
-                        <div class="contact-info">
-                            <h3>Resume</h3>
-                            <p>Download my CV</p>
+                        <div class="contact-details">
+                            <h3>Curriculum Vitae</h3>
+                            <p>Download my resume for more information about my professional journey</p>
+                            <a href="assets/CV_Daro_Samaky.pdf" target="_blank" class="contact-action" download>
+                                <span>Download Resume</span>
+                                <i class="fas fa-download"></i>
+                            </a>
                         </div>
-                    </a>
-                </div>
-            </div>
-        </section>
+                    </div>
 
-        <section id="about" class="section">
-            <div class="container">
-                <h2 class="section-title">About <span>Me</span></h2>
-
-                <div class="about-content">
-                    <p class="about-intro">
-                        I'm a Full Stack Developer with expertise in web, mobile, and game development,
-                        focused on creating user-friendly and scalable digital experiences.
-                    </p>
-
-                    <div class="about-details">
-                        <div class="about-section">
-                            <h3><i class="fas fa-route"></i> My Journey</h3>
+                    <div class="contact-bottom">
+                        <div class="availability-message">
                             <p>
-                                My development journey began with a curiosity about how technology works.
-                                Over the years, I've honed my skills across multiple platforms and languages,
-                                constantly adapting to new technologies and methodologies.
-                            </p>
-                            <p>
-                                I've worked on various projects, from web applications to mobile apps and games,
-                                each providing unique challenges and opportunities for growth.
-                            </p>
-                        </div>
-
-                        <div class="about-section">
-                            <h3><i class="fas fa-compass"></i> My Approach</h3>
-                            <p>
-                                I believe in writing clean, maintainable code that solves real problems.
-                                My approach combines technical expertise with creative thinking to deliver
-                                solutions that exceed expectations.
-                            </p>
-                            <p>
-                                I prioritize collaboration, clear communication, and continuous learning
-                                in all my projects, ensuring the best possible outcomes.
-                            </p>
-                        </div>
-
-                        <div class="about-section">
-                            <h3><i class="fas fa-heart"></i> Beyond Coding</h3>
-                            <p>
-                                When I'm not coding, I enjoy exploring new technologies, contributing to
-                                open source, and staying current with industry trends. I'm passionate about
-                                creating software that makes a positive impact.
+                                Looking forward to your message! I'm currently seeking new projects and opportunities to
+                                collaborate.
                             </p>
                         </div>
                     </div>
@@ -764,8 +843,35 @@
     </main>
 
     <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 Daro Samaky. All rights reserved.</p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Daro <span>Samaky</span></h3>
+                    <p class="footer-tagline">Full Stack Developer & Designer</p>
+                    <p class="footer-bio">Building creative and functional web experiences with modern technologies.</p>
+                </div>
+
+                <div class="footer-social">
+                    <h4>Connect</h4>
+                    <div class="social-icons">
+                        <a href="https://github.com/Dahreau" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/daro-samaky-2752b7192/" target="_blank"><i
+                                class="fab fa-linkedin-in"></i></a>
+                        <a href="mailto:darosamaky@gmail.com"><i class="fas fa-envelope"></i></a>
+                        <a href="https://cv.emage-me.com/me/daro-samaky" target="_blank"><i
+                                class="fas fa-id-card"></i></a>
+                        <a href="assets/CV_Daro_Samaky.pdf" download title="Download my Resume"><i
+                                class="fas fa-file-pdf"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Daro Samaky. All rights reserved.</p>
+                <div class="footer-credits">
+                    <p><span>Code</span> • <span>Create</span> • <span>Connect</span></p>
+                </div>
+            </div>
         </div>
     </footer>
 

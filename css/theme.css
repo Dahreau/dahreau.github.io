@@ -5,134 +5,270 @@ body {
     transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-/* Bouton de basculement de thème */
-.nav-container {
-    display: flex;
-    align-items: center;
+body.light-mode {
+    background-color: #f5f5f5;
+    color: #333333;
 }
 
+/* Mise à jour du bouton de changement de thème */
 .theme-toggle {
     background: none;
     border: none;
     cursor: pointer;
-    color: var(--text-light);
     font-size: 1.2rem;
-    padding: 8px;
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: var(--transition);
     width: 40px;
     height: 40px;
-    margin-left: 1.5rem;
-    background-color: var(--light-bg);
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
 }
 
 .theme-toggle:hover {
-    background-color: var(--primary-color);
-    transform: translateY(-2px);
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: rotate(15deg);
+}
+
+/* Style de l'icône pour le mode sombre (icône soleil) */
+.theme-toggle .fa-sun {
+    position: absolute;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.theme-toggle .fa-moon {
+    position: absolute;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Style pour le mode clair (icône lune visible) */
+body.light-mode .theme-toggle .fa-sun {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+body.light-mode .theme-toggle .fa-moon {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+body.light-mode .theme-toggle {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 body.light-mode .theme-toggle:hover {
-    background-color: var(--primary-color);
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
-/* Masquer l'icône appropriée selon le thème */
-body:not(.light-mode) .fa-moon {
-    display: none;
+/* Améliorations de visibilité pour le mode clair */
+body.light-mode header {
+    background-color: rgba(30, 40, 70, 0.9); /* Fond plus foncé pour la navbar en mode clair */
 }
 
-body.light-mode .fa-sun {
-    display: none;
+body.light-mode .nav-menu li {
+    color: rgba(255, 255, 255, 0.85); /* Texte plus clair pour contraster avec le fond plus foncé */
+}
+
+body.light-mode .logo {
+    color: white; /* Assurer que "Daro" est bien visible */
+}
+
+body.light-mode .logo span {
+    color: var(--accent-color); /* Maintenir la couleur d'accent pour "Samaky" */
+}
+
+body.light-mode .nav-menu li.active {
+    color: var(--accent-color); /* S'assurer que l'élément actif reste visible */
+}
+
+/* Correction pour le graphique radar en mode clair */
+body.light-mode .radar-chart-container {
+    background-color: rgba(30, 40, 70, 0.9); /* Fond plus foncé pour le conteneur du radar */
+}
+
+body.light-mode #skillsRadarChart {
+    filter: brightness(0.9) contrast(1.1); /* Ajuster la luminosité et le contraste */
+}
+
+body.light-mode .skill-chart-title,
+body.light-mode .skill-legend-label {
+    color: white; /* Texte blanc pour les légendes autour du graphique */
+}
+
+/* Ajuster les grilles du graphique radar */
+body.light-mode .chartjs-render-monitor {
+    --chart-grid-color: rgba(255, 255, 255, 0.2); /* Couleur de grille plus visible */
+}
+
+/* Ajustements pour le background en mode clair */
+body.light-mode canvas {
+    opacity: 0.5;
 }
 
 /* Ajustements pour les cartes en mode clair */
-body.light-mode {
-    color: var(--text-light);
-}
-
 body.light-mode .project-card,
 body.light-mode .skill-group,
-body.light-mode .language-card,
-body.light-mode .skill-item,
-body.light-mode .contact-item,
-body.light-mode .about-details {
-    border: 1px solid #e0e0e0;
+body.light-mode .contact-card {
+    background-color: #ffffff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    color: #333333;
 }
 
+body.light-mode .project-card:hover,
+body.light-mode .skill-group:hover,
+body.light-mode .contact-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Ajustements pour les titres en mode clair */
+body.light-mode h1, 
+body.light-mode h2, 
+body.light-mode h3, 
+body.light-mode h4, 
+body.light-mode h5 {
+    color: #333333;
+}
+
+body.light-mode .section-title {
+    color: #333333;
+}
+
+body.light-mode .section-title span {
+    color: var(--accent-color);
+}
+
+/* Ajustements pour le texte en mode clair */
+body.light-mode p {
+    color: #555555;
+}
+
+body.light-mode .text-muted {
+    color: #777777;
+}
+
+/* Ajustements pour les barres de compétences en mode clair */
 body.light-mode .bar-container {
-    background-color: #e0e0e0;
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 body.light-mode .bar:not(.filled) {
     background-color: #e0e0e0;
 }
 
+/* Ajustements pour le footer en mode clair */
+body.light-mode footer {
+    background-color: #e8e8e8;
+    color: #333;
+}
+
+/* Ajustements pour les éléments interactifs en mode clair */
+body.light-mode .filter-btn {
+    background-color: #e8e8e8;
+    color: #555555;
+}
+
+body.light-mode .filter-btn:hover {
+    background-color: #d8d8d8;
+}
+
+body.light-mode .filter-btn.active {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/* Ajustements pour les skills items en mode clair */
+body.light-mode .skill-item {
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+body.light-mode .skill-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--primary-color);
+}
+
+/* Ajustements pour les stats en mode clair */
+body.light-mode .stat-card {
+    background-color: #ffffff;
+}
+
+body.light-mode .stat-icon {
+    background-color: rgba(94, 157, 217, 0.15);
+}
+
+body.light-mode .github-integration {
+    background-color: #ffffff;
+}
+
+body.light-mode .github-stat {
+    background-color: #f0f0f0;
+}
+
+body.light-mode .tech-usage-card {
+    background-color: #ffffff;
+}
+
+/* Ajustements pour les projets en mode clair */
 body.light-mode .project-tags span {
-    background-color: rgba(41, 121, 255, 0.1);
-    color: var(--text-light);
+    background-color: rgba(94, 157, 217, 0.15);
+    color: var(--primary-color);
+}
+
+/* Ajustements pour la timeline en mode clair */
+body.light-mode .timeline-content {
+    background-color: #ffffff;
+}
+
+body.light-mode .timeline-date {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+body.light-mode .timeline::after {
+    background-color: var(--accent-color);
+}
+
+/* Ajustements pour le contact en mode clair */
+body.light-mode .contact-intro-block {
+    background-color: #ffffff;
 }
 
 body.light-mode .contact-icon {
-    background-color: rgba(41, 121, 255, 0.1);
+    background-color: rgba(94, 157, 217, 0.15);
 }
 
-/* Mode clair: couleurs de code spécifiques */
-body.light-mode .code-block pre code {
-    color: #333333;
+body.light-mode .availability-status {
+    background-color: #ffffff;
 }
 
-body.light-mode .dot.red {
-    background-color: #ff5252;
+/* Ajustements pour le code en mode clair */
+body.light-mode .code-block {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-body.light-mode .dot.yellow {
-    background-color: #ffca28;
+body.light-mode .code-header {
+    background-color: #e0e0e0;
 }
 
-body.light-mode .dot.green {
-    background-color: #66bb6a;
+body.light-mode pre code {
+    background-color: #f0f0f0;
+    color: #333;
 }
-
-/* Particle background en mode clair */
-body.light-mode canvas {
-    opacity: 0.3; /* Réduire l'opacité des particules en mode clair */
-}
-
-/* Focus badges en mode clair */
-body.light-mode .focus-badge {
-    background-color: rgba(41, 121, 255, 0.1);
-    border-color: rgba(41, 121, 255, 0.2);
-}
-
-/* Portfolio status en mode clair */
+/* Ajout pour le message "This portfolio is currently under development" */
 body.light-mode .portfolio-status {
-    background: linear-gradient(to right, rgba(41, 121, 255, 0.1), rgba(200, 200, 200, 0.2));
-    color: var(--text-muted);
+    background: linear-gradient(to right, rgba(61, 114, 180, 0.2), rgba(30, 30, 30, 0.1));
+    color: #333333;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Améliorations responsives spécifiques au thème */
-@media (max-width: 768px) {
-    .theme-toggle {
-        margin-left: 1rem;
-        width: 36px;
-        height: 36px;
-    }
-}
-
-@media (max-width: 576px) {
-    .nav-container {
-        width: 100%;
-        justify-content: space-between;
-    }
-    
-    .nav-menu {
-        width: auto;
-    }
-    
-    .theme-toggle {
-        margin-left: 0;
-        margin-right: 0.5rem;
-    }
+body.light-mode .portfolio-status i {
+    color: var(--accent-color);
 }

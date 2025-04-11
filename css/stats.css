@@ -1,55 +1,173 @@
 /* Statistics section */
+#statistics {
+    padding: 5rem 0;
+}
+
+.stats-overview {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    text-align: center;
+}
+
+.stats-intro {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
 .stats-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
-    margin: 3rem 0;
+    margin-bottom: 4rem;
 }
 
 .stat-card {
-    background-color: var(--medium-bg);
+    background-color: var(--light-bg);
     border-radius: var(--border-radius);
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: var(--transition);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 180px;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease;
+    z-index: 1;
 }
 
 .stat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card:hover::before {
+    width: 100%;
+    opacity: 0.1;
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    margin-bottom: 1.2rem;
+    position: relative;
+    z-index: 2;
+    background-color: rgba(94, 157, 217, 0.1);
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin: 0 auto 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover .stat-icon {
+    background-color: var(--accent-color);
+    color: #fff;
+    transform: scale(1.1);
 }
 
 .stat-number {
     font-size: 2.5rem;
     font-weight: 700;
+    color: var(--text-light);
+    margin-bottom: 0.6rem;
+    position: relative;
+    z-index: 2;
+    position: relative;
+    display: inline-block;
+}
+
+.stat-number::after {
+    content: '+';
+    font-size: 1.5rem;
+    position: absolute;
+    top: 0;
+    right: -15px;
     color: var(--accent-color);
-    margin-bottom: 0.5rem;
 }
 
 .stat-label {
     color: var(--text-muted);
-    font-size: 0.9rem;
+    font-size: 1rem;
+    font-weight: 500;
+    position: relative;
+    z-index: 2;
 }
 
-/* GitHub Integration */
+/* GitHub Integration - Version améliorée */
 .github-integration {
-    margin-top: 4rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--light-bg);
+    background-color: var(--light-bg);
+    border-radius: var(--border-radius);
+    padding: 2.5rem;
+    margin-bottom: 4rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
 }
 
-.github-integration h3 {
-    text-align: center;
-    margin-bottom: 2rem;
+.github-integration::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 150px;
+    height: 150px;
+    background-color: var(--accent-color);
+    opacity: 0.05;
+    border-radius: 0 0 0 150px;
 }
 
-.github-stats {
+.github-header {
     display: flex;
+    align-items: center;
     justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.github-header i {
+    font-size: 2.2rem;
+    color: var(--accent-color);
+}
+
+.github-header h3 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: var(--text-light);
+}
+
+.github-stats-grid {
+    display: flex;
     gap: 2rem;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.github-stats-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    flex: 1;
+}
+
+.github-chart-container {
+    flex: 2;
 }
 
 .github-stat {
@@ -57,40 +175,229 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    min-width: 120px;
+    padding: 1.5rem;
+    background-color: var(--medium-bg);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
 }
 
-.github-stat i {
+.github-stat:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.github-icon {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(94, 157, 217, 0.15);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 1.5rem;
     color: var(--accent-color);
-    margin-bottom: 0.5rem;
+    margin: 0 auto 1rem;
+    transition: all 0.3s ease;
+}
+
+.github-stat:hover .github-icon {
+    background-color: var(--accent-color);
+    color: white;
+    transform: scale(1.1);
 }
 
 .github-count {
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     font-weight: 600;
-    margin-bottom: 0.3rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+    position: relative;
+    display: inline-block;
 }
 
 .github-label {
     color: var(--text-muted);
-    font-size: 0.9rem;
+    font-size: 0.95rem;
 }
 
-.github-calendar {
-    background-color: var(--medium-bg);
+.github-activity {
     padding: 1.5rem;
+    background-color: var(--medium-bg);
     border-radius: var(--border-radius);
+    height: 100%;
+}
+
+.github-activity h4 {
     text-align: center;
-    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    color: var(--text-light);
+    font-weight: 500;
 }
 
-.github-calendar h4 {
-    margin-bottom: 1rem;
-    color: var(--text-muted);
-}
-
-.github-calendar img {
+.contribution-calendar-wrapper {
     max-width: 100%;
-    height: auto;
+    overflow-x: auto;
+    padding: 0.5rem;
+    background-color: var(--dark-bg);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.github-calendar-img {
+    width: 100%;
+    max-height: 110px;
+    object-fit: contain;
+    filter: contrast(0.95) brightness(0.95);
+}
+
+.github-profile-link-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.github-profile-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    background-color: var(--medium-bg);
+    color: var(--text-light);
+    border-radius: 30px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.github-profile-link:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Tech Usage Section */
+.tech-usage-section {
+    margin-top: 4rem;
+}
+
+.tech-usage-title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+}
+
+.tech-usage-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background-color: var(--accent-color);
+}
+
+.tech-usage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.tech-usage-card {
+    background-color: var(--medium-bg);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.tech-usage-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.tech-usage-icon {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(94, 157, 217, 0.15);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    flex-shrink: 0;
+}
+
+.tech-usage-info {
+    flex: 1;
+}
+
+.tech-usage-info h4 {
+    margin: 0 0 0.8rem;
+    font-size: 1.1rem;
+}
+
+.tech-usage-bar {
+    width: 100%;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.tech-usage-fill {
+    height: 100%;
+    background-color: var(--accent-color);
+    border-radius: 4px;
+}
+
+.tech-usage-percent {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    text-align: right;
+    display: block;
+}
+
+/* Responsive styles */
+@media (max-width: 992px) {
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .github-stats-grid {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .github-stats-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .github-stats-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .stat-card {
+        min-height: 150px;
+    }
+    
+    .tech-usage-grid {
+        grid-template-columns: 1fr;
+    }
 }

@@ -9,12 +9,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.addEventListener("scroll", updateReadingProgress);
 
-  // ------- Project Filtering -------
+  // ------- Project Filtering avec méthode anti-clignotement -------
   const filterButtons = document.querySelectorAll(".filter-btn");
   const projectCards = document.querySelectorAll(".project-card");
+  const projectsGrid = document.querySelector(".projects-grid");
+
+  let isFiltering = false; // Pour éviter les filtres multiples simultanés
 
   filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
+      // Éviter les filtres multiples trop rapides
+      if (isFiltering) return;
+      isFiltering = true;
+
       // Remove active class from all buttons
       filterButtons.forEach((btn) => btn.classList.remove("active"));
 
@@ -24,16 +31,47 @@ document.addEventListener("DOMContentLoaded", () => {
       // Get filter value
       const filterValue = button.getAttribute("data-filter");
 
-      // Filter projects
+      // Masquer tous les projets rapidement pour éviter le clignotement
       projectCards.forEach((card) => {
-        const category = card.getAttribute("data-category");
-
-        if (filterValue === "all" || category === filterValue) {
-          card.classList.remove("filtered-out");
-        } else {
-          card.classList.add("filtered-out");
-        }
+        // On supprime d'abord les classes d'animation et visible
+        card.classList.remove("animate-in");
+        card.style.opacity = "0";
+        card.style.transform = "scale(0.9)";
       });
+
+      // Après un court délai, appliquons le filtrage réel
+      setTimeout(() => {
+        // Parcourir toutes les cartes pour décider lesquelles afficher
+        let visibleCards = [];
+        projectCards.forEach((card) => {
+          const tags = card.getAttribute("data-tags");
+
+          if (filterValue === "all" || (tags && tags.includes(filterValue))) {
+            // Cette carte correspond au filtre, la garder visible
+            card.classList.remove("filtered-out");
+            card.classList.add("visible");
+            visibleCards.push(card);
+          } else {
+            // Cette carte ne correspond pas au filtre, la cacher
+            card.classList.add("filtered-out");
+            card.classList.remove("visible");
+          }
+        });
+
+        // Animation d'entrée séquentielle pour les cartes visibles
+        visibleCards.forEach((card, index) => {
+          setTimeout(() => {
+            card.style.opacity = "1";
+            card.style.transform = "scale(1)";
+            card.classList.add("animate-in");
+          }, 50 * index);
+        });
+
+        // Permettre un nouveau filtrage après un délai
+        setTimeout(() => {
+          isFiltering = false;
+        }, 50 * visibleCards.length + 300);
+      }, 300);
     });
   });
 
@@ -111,26 +149,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
   fetchGitHubStats();
 
-  // ------- Radar Chart for Skills -------
-  const ctx = document.getElementById("skillsRadarChart");
-  if (ctx) {
-    new Chart(ctx, {
+  // ------- Radar Chart for Skills avec animation progressive AMÉLIORÉE -------
+  let skillsChart = null; // Variable globale pour stocker l'instance du graphique
+
+  function initializeSkillsChart() {
+    const ctx = document.getElementById("skillsRadarChart");
+    if (!ctx) return;
+
+    // Important: détruire le graphique existant s'il y en a un
+    if (skillsChart) {
+      skillsChart.destroy();
+    }
+
+    // Forcer l'opacité à 0 pour s'assurer que l'animation est visible
+    ctx.style.opacity = "0";
+    ctx.style.transform = "scale(0.9)";
+
+    // Définir les libellés et les données finales
+    const labels = ["Frontend", "Backend", "UX/UI", "Database", "Game Dev"];
+    const finalData = [90, 85, 75, 70, 80];
+
+    // Créer le graphique avec des données initiales à zéro
+    skillsChart = new Chart(ctx, {
       type: "radar",
       data: {
-        labels: [
-          "JavaScript",
-          "HTML/CSS",
-          "Go",
-          "C",
-          "SQLite",
-          "UI/UX",
-          "Game Dev",
-        ],
+        labels: labels,
         datasets: [
           {
             label: "Skill Level",
-            data: [85, 90, 75, 70, 80, 65, 75],
-            backgroundColor: "rgba(94, 157, 217, 0.2)",
+            data: [0, 0, 0, 0, 0], // Commencer avec zéro
+            backgroundColor: "rgba(94, 157, 217, 0)", // Fond initial transparent
             borderColor: "#5e9dd9",
             borderWidth: 2,
             pointBackgroundColor: "#5e9dd9",
@@ -168,40 +216,70 @@ document.addEventListener("DOMContentLoaded", () => {
             display: false,
           },
         },
+        animation: {
+          duration: 0, // Désactiver l'animation automatique de Chart.js
+        },
       },
     });
+
+    // Animation progressive manuelle
+    const totalSteps = 25;
+    let currentStep = 0;
+
+    // Faire apparaître le graphique avec délai
+    setTimeout(() => {
+      ctx.style.opacity = "1";
+      ctx.style.transform = "scale(1)";
+
+      // Animation des données et du fond
+      function animateStep() {
+        if (currentStep >= totalSteps) return;
+
+        currentStep++;
+        const progress = currentStep / totalSteps;
+
+        // Calculer les valeurs intermédiaires
+        const newData = finalData.map((value) => Math.round(value * progress));
+
+        // Calculer la valeur d'opacité intermédiaire pour le fond
+        const backgroundAlpha = 0.2 * progress;
+
+        // Mettre à jour les données et le fond
+        skillsChart.data.datasets[0].data = newData;
+        skillsChart.data.datasets[0].backgroundColor = `rgba(94, 157, 217, ${backgroundAlpha})`;
+
+        // Mettre à jour le graphique
+        skillsChart.update();
+
+        // Continuer l'animation
+        if (currentStep < totalSteps) {
+          requestAnimationFrame(animateStep);
+        }
+      }
+
+      // Démarrer l'animation après un délai
+      setTimeout(animateStep, 300);
+    }, 200);
   }
 
-  // ------- Form Submission -------
-  const contactForm = document.getElementById("contactForm");
-  if (contactForm) {
-    contactForm.addEventListener("submit", function (e) {
-      e.preventDefault();
+  // Initialiser le graphique au chargement si la section est active
+  const skillsSection = document.getElementById("skills");
+  if (skillsSection && skillsSection.classList.contains("active")) {
+    initializeSkillsChart();
+  }
 
-      // Collect form data
-      const name = document.getElementById("name").value;
-      const email = document.getElementById("email").value;
-      const subject = document.getElementById("subject").value;
-      const message = document.getElementById("message").value;
-
-      // Here you would normally send this to a server
-      // For demo purposes, just log to console and show success
-      console.log({
-        name,
-        email,
-        subject,
-        message,
-      });
-
-      // Show success message
-      alert("Message sent successfully! (Demo only, no actual email sent)");
-
-      // Reset form
-      contactForm.reset();
+  // Initialiser le graphique quand on change de section
+  document.querySelectorAll(".nav-menu li").forEach((navItem) => {
+    navItem.addEventListener("click", function () {
+      const sectionId = this.getAttribute("data-section");
+      if (sectionId === "skills") {
+        // Important: délai pour laisser la transition de section se terminer
+        setTimeout(initializeSkillsChart, 300);
+      }
     });
-  }
+  });
 
-  // ------- Scroll Animations -------
+  // ------- Scroll Animations (pour la timeline et autres) -------
   function handleScrollAnimations() {
     const elements = document.querySelectorAll("[data-aos]");
 
@@ -221,4 +299,9 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", handleScrollAnimations);
   // Initial check on load
   handleScrollAnimations();
+
+  // Au chargement, marquer tous les projets comme visibles
+  projectCards.forEach((card) => {
+    card.classList.add("visible");
+  });
 });
