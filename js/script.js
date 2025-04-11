@@ -360,3 +360,36 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("theme", currentTheme);
   });
 });
+// Gestion de la navigation et du scroll
+document.querySelectorAll(".nav-menu li").forEach((item) => {
+  item.addEventListener("click", function (e) {
+    const sectionId = this.getAttribute("data-section");
+    const currentActive = document.querySelector(".nav-menu li.active");
+
+    // Si on clique sur l'élément déjà actif ou qu'on change de section
+    // Dans les deux cas, remonter en haut
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    // Si on ne clique pas sur l'élément déjà actif
+    if (this !== currentActive) {
+      // Changement de section
+      document.querySelectorAll(".section").forEach((section) => {
+        section.classList.remove("active");
+      });
+
+      document.querySelectorAll(".nav-menu li").forEach((navItem) => {
+        navItem.classList.remove("active");
+      });
+
+      this.classList.add("active");
+      document.getElementById(sectionId).classList.add("active");
+
+      // Déclencher un événement personnalisé pour les scripts qui en ont besoin
+      document.dispatchEvent(
+        new CustomEvent("sectionChanged", {
+          detail: { newSection: sectionId },
+        })
+      );
+    }
+  });
+});

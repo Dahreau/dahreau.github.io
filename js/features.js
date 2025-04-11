@@ -305,3 +305,76 @@ document.addEventListener("DOMContentLoaded", () => {
     card.classList.add("visible");
   });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Enregistrer le plugin ScrollTrigger
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Animation du titre principal
+  gsap.from(".home-info h1", {
+    duration: 1,
+    y: 50,
+    opacity: 0,
+    ease: "power3.out",
+    delay: 0.2,
+  });
+
+  // Animation des cartes projet avec décalage
+  gsap.utils.toArray(".project-card").forEach((card, i) => {
+    gsap.from(card, {
+      scrollTrigger: {
+        trigger: card,
+        start: "top bottom-=100",
+        toggleActions: "play none none none",
+      },
+      y: 100,
+      opacity: 0,
+      duration: 0.8,
+      ease: "power3.out",
+      delay: i * 0.1,
+    });
+  });
+
+  // Animation des compétences
+  gsap.from(".skill-item", {
+    scrollTrigger: {
+      trigger: ".skill-list",
+      start: "top bottom-=100",
+    },
+    opacity: 0,
+    y: 30,
+    stagger: 0.05,
+    duration: 0.5,
+    ease: "power2.out",
+  });
+
+  // Animation de la timeline
+  gsap.utils.toArray(".timeline-item").forEach((item) => {
+    gsap.from(item, {
+      scrollTrigger: {
+        trigger: item,
+        start: "top bottom-=100",
+      },
+      x: item.classList.contains("right") ? 100 : -100,
+      opacity: 0,
+      duration: 0.8,
+    });
+  });
+});
+document.querySelectorAll(".project-card").forEach((card) => {
+  card.addEventListener("mouseenter", function () {
+    const expandedDetails = this.querySelector(".project-details-expanded");
+    if (expandedDetails) {
+      setTimeout(() => {
+        expandedDetails.classList.add("transition-done");
+      }, 500); // Correspond à la durée de transition height 0.5s
+    }
+  });
+
+  card.addEventListener("mouseleave", function () {
+    const expandedDetails = this.querySelector(".project-details-expanded");
+    if (expandedDetails) {
+      expandedDetails.classList.remove("transition-done");
+    }
+  });
+});
