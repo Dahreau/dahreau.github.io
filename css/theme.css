@@ -27,7 +27,6 @@ body.light-mode {
     position: relative;
     overflow: hidden;
     margin-left: 15px;
-
 }
 
 .theme-toggle:hover {
@@ -79,8 +78,9 @@ body.light-mode .nav-menu li {
     color: rgba(255, 255, 255, 0.85); /* Texte plus clair pour contraster avec le fond plus foncé */
 }
 
+/* Garder le prénom Daro blanc simple */
 body.light-mode .logo {
-    color: white; /* Assurer que "Daro" est bien visible */
+    color: white; /* Texte blanc pour le logo */
 }
 
 body.light-mode .logo span {
@@ -93,21 +93,36 @@ body.light-mode .nav-menu li.active {
 
 /* Correction pour le graphique radar en mode clair */
 body.light-mode .radar-chart-container {
-    background-color: rgba(30, 40, 70, 0.9); /* Fond plus foncé pour le conteneur du radar */
+    background-color: #ffffff; /* Fond blanc comme les autres cartes */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 body.light-mode #skillsRadarChart {
-    filter: brightness(0.9) contrast(1.1); /* Ajuster la luminosité et le contraste */
+    filter: none; /* Supprimer les filtres précédents */
 }
 
-body.light-mode .skill-chart-title,
+/* Adaptation des couleurs du graphique pour le mode clair */
+body.light-mode .skill-chart-title {
+    color: #333333; /* Texte foncé comme les autres titres */
+}
+
 body.light-mode .skill-legend-label {
-    color: white; /* Texte blanc pour les légendes autour du graphique */
+    color: #555555; /* Texte gris foncé pour les légendes */
 }
 
-/* Ajuster les grilles du graphique radar */
+/* Ajustement des couleurs du graphique radar lui-même */
 body.light-mode .chartjs-render-monitor {
-    --chart-grid-color: rgba(255, 255, 255, 0.2); /* Couleur de grille plus visible */
+    --chart-grid-color: rgba(0, 0, 0, 0.1); /* Grille plus foncée sur fond clair */
+}
+
+/* Pour Chart.js - ces règles affecteront le rendu du graphique */
+body.light-mode canvas#skillsRadarChart {
+    --accent-opacity: 0.3; /* Plus d'opacité pour le remplissage sur fond clair */
+}
+
+/* Force l'initialisation correcte du graphique en mode clair */
+body.light-mode .radar-chart-container:has(canvas) {
+    z-index: 1; /* Assurer le bon ordre d'empilement */
 }
 
 /* Ajustements pour le background en mode clair */
@@ -154,6 +169,17 @@ body.light-mode p {
 
 body.light-mode .text-muted {
     color: #777777;
+}
+
+/* Ajustement pour le message "This portfolio is currently under development" */
+body.light-mode .portfolio-status {
+    background: linear-gradient(to right, rgba(61, 114, 180, 0.2), rgba(30, 30, 30, 0.1));
+    color: #333333;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .portfolio-status i {
+    color: var(--accent-color);
 }
 
 /* Ajustements pour les barres de compétences en mode clair */
@@ -264,13 +290,17 @@ body.light-mode pre code {
     background-color: #f0f0f0;
     color: #333;
 }
-/* Ajout pour le message "This portfolio is currently under development" */
-body.light-mode .portfolio-status {
-    background: linear-gradient(to right, rgba(61, 114, 180, 0.2), rgba(30, 30, 30, 0.1));
-    color: #333333;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+/* Correction renforcée pour la visibilité du prénom Daro en mode clair */
+body.light-mode .logo,
+body.light-mode h1.logo,
+body.light-mode header .logo {
+    color: white !important; /* Forcer la couleur blanche */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); /* Ombre plus prononcée */
 }
 
-body.light-mode .portfolio-status i {
-    color: var(--accent-color);
+body.light-mode .logo span,
+body.light-mode h1.logo span,
+body.light-mode header .logo span {
+    color: var(--accent-color) !important; /* Maintenir la couleur d'accent pour "Samaky" */
 }

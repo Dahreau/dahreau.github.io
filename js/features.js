@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   fetchGitHubStats();
 
-  // ------- Radar Chart for Skills avec animation progressive AMÉLIORÉE -------
+  // ------- Radar Chart for Skills avec animation progressive et compatibilité mode clair -------
   let skillsChart = null; // Variable globale pour stocker l'instance du graphique
 
   function initializeSkillsChart() {
@@ -165,6 +165,16 @@ document.addEventListener("DOMContentLoaded", () => {
     ctx.style.opacity = "0";
     ctx.style.transform = "scale(0.9)";
 
+    // Vérifier si nous sommes en mode clair pour adapter les couleurs
+    const isLightMode = document.body.classList.contains("light-mode");
+    const gridColor = isLightMode
+      ? "rgba(0, 0, 0, 0.1)"
+      : "rgba(255, 255, 255, 0.1)";
+    const textColor = isLightMode ? "#555555" : "#b0b0b0";
+    const fillColor = isLightMode
+      ? "rgba(94, 157, 217, 0.3)"
+      : "rgba(94, 157, 217, 0.2)";
+
     // Définir les libellés et les données finales
     const labels = ["Frontend", "Backend", "UX/UI", "Database", "Game Dev"];
     const finalData = [90, 85, 75, 70, 80];
@@ -178,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
           {
             label: "Skill Level",
             data: [0, 0, 0, 0, 0], // Commencer avec zéro
-            backgroundColor: "rgba(94, 157, 217, 0)", // Fond initial transparent
+            backgroundColor: fillColor,
             borderColor: "#5e9dd9",
             borderWidth: 2,
             pointBackgroundColor: "#5e9dd9",
@@ -197,17 +207,17 @@ document.addEventListener("DOMContentLoaded", () => {
               display: false,
             },
             grid: {
-              color: "rgba(255, 255, 255, 0.1)",
+              color: gridColor,
             },
             angleLines: {
-              color: "rgba(255, 255, 255, 0.1)",
+              color: gridColor,
             },
             pointLabels: {
               font: {
                 family: "'Poppins', sans-serif",
                 size: 12,
               },
-              color: "#b0b0b0",
+              color: textColor,
             },
           },
         },
@@ -242,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const newData = finalData.map((value) => Math.round(value * progress));
 
         // Calculer la valeur d'opacité intermédiaire pour le fond
-        const backgroundAlpha = 0.2 * progress;
+        const backgroundAlpha = isLightMode ? 0.3 * progress : 0.2 * progress;
 
         // Mettre à jour les données et le fond
         skillsChart.data.datasets[0].data = newData;
@@ -273,11 +283,22 @@ document.addEventListener("DOMContentLoaded", () => {
     navItem.addEventListener("click", function () {
       const sectionId = this.getAttribute("data-section");
       if (sectionId === "skills") {
-        // Important: délai pour laisser la transition de section se terminer
         setTimeout(initializeSkillsChart, 300);
       }
     });
   });
+
+  // Réinitialiser le graphique si le thème change
+  document
+    .getElementById("theme-toggle")
+    .addEventListener("click", function () {
+      // Attendre que le changement de thème soit appliqué
+      setTimeout(() => {
+        if (skillsSection.classList.contains("active")) {
+          initializeSkillsChart();
+        }
+      }, 300);
+    });
 
   // ------- Scroll Animations (pour la timeline et autres) -------
   function handleScrollAnimations() {
@@ -304,77 +325,23 @@ document.addEventListener("DOMContentLoaded", () => {
   projectCards.forEach((card) => {
     card.classList.add("visible");
   });
-});
 
-document.addEventListener("DOMContentLoaded", function () {
-  // Enregistrer le plugin ScrollTrigger
-  gsap.registerPlugin(ScrollTrigger);
-
-  // Animation du titre principal
-  gsap.from(".home-info h1", {
-    duration: 1,
-    y: 50,
-    opacity: 0,
-    ease: "power3.out",
-    delay: 0.2,
-  });
-
-  // Animation des cartes projet avec décalage
-  gsap.utils.toArray(".project-card").forEach((card, i) => {
-    gsap.from(card, {
-      scrollTrigger: {
-        trigger: card,
-        start: "top bottom-=100",
-        toggleActions: "play none none none",
-      },
-      y: 100,
-      opacity: 0,
-      duration: 0.8,
-      ease: "power3.out",
-      delay: i * 0.1,
+  // Ajouter la classe transition-done après la transition des cartes projet
+  document.querySelectorAll(".project-card").forEach((card) => {
+    card.addEventListener("mouseenter", function () {
+      const expandedDetails = this.querySelector(".project-details-expanded");
+      if (expandedDetails) {
+        setTimeout(() => {
+          expandedDetails.classList.add("transition-done");
+        }, 500); // Correspond à la durée de transition height 0.5s
+      }
     });
-  });
 
-  // Animation des compétences
-  gsap.from(".skill-item", {
-    scrollTrigger: {
-      trigger: ".skill-list",
-      start: "top bottom-=100",
-    },
-    opacity: 0,
-    y: 30,
-    stagger: 0.05,
-    duration: 0.5,
-    ease: "power2.out",
-  });
-
-  // Animation de la timeline
-  gsap.utils.toArray(".timeline-item").forEach((item) => {
-    gsap.from(item, {
-      scrollTrigger: {
-        trigger: item,
-        start: "top bottom-=100",
-      },
-      x: item.classList.contains("right") ? 100 : -100,
-      opacity: 0,
-      duration: 0.8,
+    card.addEventListener("mouseleave", function () {
+      const expandedDetails = this.querySelector(".project-details-expanded");
+      if (expandedDetails) {
+        expandedDetails.classList.remove("transition-done");
+      }
     });
-  });
-});
-document.querySelectorAll(".project-card").forEach((card) => {
-  card.addEventListener("mouseenter", function () {
-    const expandedDetails = this.querySelector(".project-details-expanded");
-    if (expandedDetails) {
-      setTimeout(() => {
-        expandedDetails.classList.add("transition-done");
-      }, 500); // Correspond à la durée de transition height 0.5s
-    }
-  });
-
-  card.addEventListener("mouseleave", function () {
-    const expandedDetails = this.querySelector(".project-details-expanded");
-    if (expandedDetails) {
-      expandedDetails.classList.remove("transition-done");
-    }
   });
 });
