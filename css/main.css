@@ -13,4 +13,5 @@
 @import 'timeline.css';   /* Timeline de parcours */
 @import 'stats.css';      /* Statistiques et GitHub */
 @import 'animations.css'; /* Animations au scroll */
+@import 'about.css';      /* À propos */
 @import 'footer.css';     /* Pied de page */

@@ -1,0 +1,258 @@
+/* About Section Styles */
+.about-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.about-content {
+    background-color: var(--medium-bg);
+    border-radius: var(--border-radius);
+    padding: 2.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.about-content::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 150px;
+    height: 150px;
+    background-color: var(--accent-color);
+    opacity: 0.05;
+    border-radius: 0 0 0 100%;
+}
+
+.about-text {
+    margin-bottom: 2.5rem;
+}
+
+.about-intro {
+    font-size: 1.3rem;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    border-left: 3px solid var(--accent-color);
+    padding-left: 1rem;
+}
+
+.about-details p {
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.about-details p strong {
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+/* Section de principes et forces */
+.about-principles {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.about-principles h3, 
+.creative-skills h3, 
+.about-interest h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+.about-principles h3::after, 
+.creative-skills h3::after, 
+.about-interest h3::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background-color: var(--accent-color);
+}
+
+.principles-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.principle-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1.2rem;
+    background-color: var(--light-bg);
+    border-radius: var(--border-radius);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.principle-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.principle-icon {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(94, 157, 217, 0.15);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-color);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.principle-content h4 {
+    margin: 0 0 0.5rem;
+    font-size: 1.1rem;
+    color: var(--text-light);
+}
+
+.principle-content p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Section compétences créatives */
+.creative-skills {
+    margin-bottom: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.creative-intro {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.creative-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.creative-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1.5rem;
+    background-color: var(--light-bg);
+    border-radius: var(--border-radius);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.creative-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.creative-icon {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(94, 157, 217, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-color);
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+
+.creative-content h4 {
+    margin: 0 0 0.5rem;
+    font-size: 1.1rem;
+    color: var(--text-light);
+}
+
+.creative-content p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Section des intérêts */
+.about-interest {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.interests-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1.5rem;
+}
+
+.interest-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.interest-item:hover {
+    transform: translateY(-5px);
+}
+
+.interest-icon {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(94, 157, 217, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.8rem;
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.interest-item:hover .interest-icon {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.interest-item span {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.principle-item .fa-code-branch {
+    transform: rotate(90deg); /* Rotation pour une meilleure apparence */
+}
+
+.interest-item .fa-pen-fancy,
+.interest-item .fa-video {
+    font-size: 1.3rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .about-content {
+        padding: 2rem;
+    }
+    
+    .principles-container,
+    .creative-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .about-intro {
+        font-size: 1.1rem;
+    }
+}
